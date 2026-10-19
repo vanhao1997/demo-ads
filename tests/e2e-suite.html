@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E2E Verification Test Suite — Ad Preview Web App (Tiers 1–4)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: { DEFAULT: '#ed3c47', 50: '#fdedef', 600: '#d62e3a' },
+            success: { DEFAULT: '#16a34a', 50: '#e7f6ec' },
+            danger: { DEFAULT: '#e8590c', 50: '#fbeee5' },
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    :root {
+      --brand: #ed3c47;
+      --brand-050: #fdedef;
+      --bg-subtle: #f6f6f7;
+      --border: #e7e7ea;
+    }
+    body { background-color: #fbfbfb; color: #101113; }
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body class="min-h-screen text-xs antialiased">
+  <!-- Top Navigation Bar -->
+  <header class="sticky top-0 z-50 border-b border-[#e7e7ea] bg-white px-6 py-3.5 shadow-sm">
+    <div class="mx-auto flex max-w-7xl items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#ed3c47] font-bold text-white shadow-sm">
+          QA
+        </div>
+        <div>
+          <h1 class="text-sm font-bold text-[#101113]">Ad Preview E2E Verification Suite</h1>
+          <p class="text-[11px] text-[#5f6470]">Dual-Track Milestone M0 • Opaque-Box 4-Tier Test Runner</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <select id="targetSelect" class="rounded-lg border border-[#e7e7ea] bg-white px-3 py-1.5 text-xs font-medium text-[#101113] focus:border-[#ed3c47] focus:outline-none">
+          <option value="../demo-app.html">Local: ../demo-app.html</option>
+          <option value="../../brain/7b0b102b-4a94-4be4-b9d2-bcb4488c9b59/scratch/demo-app.html">Brain Prototype: demo-app.html</option>
+          <option value="http://localhost:5173/">Vite Dev Server: http://localhost:5173/</option>
+        </select>
+        <button id="runAllBtn" class="rounded-lg bg-[#ed3c47] px-4 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-[#d62e3a] transition-colors">
+          Chạy Toàn Bộ 4 Tier
+        </button>
+        <button id="exportJsonBtn" class="rounded-lg border border-[#e7e7ea] bg-white px-3 py-1.5 text-xs font-semibold text-[#101113] hover:bg-[#f6f6f7] transition-colors">
+          Xuất JSON Báo Cáo
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Grid Dashboard -->
+  <main class="mx-auto max-w-7xl px-6 py-6">
+    <!-- Metrics Cards -->
+    <div class="grid grid-cols-2 gap-4 sm:grid-cols-5 mb-6">
+      <div class="rounded-xl border border-[#e7e7ea] bg-white p-3.5 shadow-sm">
+        <div class="text-[11px] font-medium text-[#5f6470]">Tổng số bài test</div>
+        <div id="statTotal" class="mt-1 text-xl font-bold text-[#101113]">0</div>
+      </div>
+      <div class="rounded-xl border border-[#e7e7ea] bg-white p-3.5 shadow-sm">
+        <div class="text-[11px] font-medium text-[#16a34a]">Đạt (Passed)</div>
+        <div id="statPassed" class="mt-1 text-xl font-bold text-[#16a34a]">0</div>
+      </div>
+      <div class="rounded-xl border border-[#e7e7ea] bg-white p-3.5 shadow-sm">
+        <div class="text-[11px] font-medium text-[#e8590c]">Thất bại (Failed)</div>
+        <div id="statFailed" class="mt-1 text-xl font-bold text-[#e8590c]">0</div>
+      </div>
+      <div class="rounded-xl border border-[#e7e7ea] bg-white p-3.5 shadow-sm">
+        <div class="text-[11px] font-medium text-[#5f6470]">Thời gian chạy</div>
+        <div id="statDuration" class="mt-1 text-xl font-bold text-[#101113]">0 ms</div>
+      </div>
+      <div class="rounded-xl border border-[#e7e7ea] bg-white p-3.5 shadow-sm">
+        <div class="text-[11px] font-medium text-[#5f6470]">Lỗi Console</div>
+        <div id="statConsole" class="mt-1 text-xl font-bold text-[#16a34a]">0 (Hoàn hảo)</div>
+      </div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="mb-6 rounded-full bg-[#e7e7ea] h-2 overflow-hidden">
+      <div id="progressBar" class="bg-[#ed3c47] h-full w-0 transition-all duration-300"></div>
+    </div>
+
+    <!-- Tier Filter Tabs -->
+    <div class="flex items-center gap-2 mb-4 border-b border-[#e7e7ea] pb-2">
+      <button class="tier-tab font-semibold px-3 py-1.5 rounded-lg bg-[#ed3c47] text-white" data-tier="all">Tất cả (All)</button>
+      <button class="tier-tab font-semibold px-3 py-1.5 rounded-lg bg-white border border-[#e7e7ea] text-[#5f6470]" data-tier="tier1">Tier 1: Feature Coverage (46 Placements)</button>
+      <button class="tier-tab font-semibold px-3 py-1.5 rounded-lg bg-white border border-[#e7e7ea] text-[#5f6470]" data-tier="tier2">Tier 2: Boundaries & Corners</button>
+      <button class="tier-tab font-semibold px-3 py-1.5 rounded-lg bg-white border border-[#e7e7ea] text-[#5f6470]" data-tier="tier3">Tier 3: Cross-Feature</button>
+      <button class="tier-tab font-semibold px-3 py-1.5 rounded-lg bg-white border border-[#e7e7ea] text-[#5f6470]" data-tier="tier4">Tier 4: Scenarios</button>
+      <button class="tier-tab font-semibold px-3 py-1.5 rounded-lg bg-white border border-[#e7e7ea] text-[#5f6470]" data-tier="tier5">Tier 5: Adversarial Stress (M1, M4, M5)</button>
+    </div>
+
+    <!-- Split View: Test Logs & Live Target Iframe -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <!-- Left Column: Test Execution Results (7 cols) -->
+      <div class="lg:col-span-7 flex flex-col gap-3">
+        <div class="rounded-xl border border-[#e7e7ea] bg-white shadow-sm overflow-hidden">
+          <div class="flex items-center justify-between border-b border-[#e7e7ea] bg-[#f6f6f7] px-4 py-2.5">
+            <span class="font-bold text-[#101113]">Danh Sách Kiểm Thử & Kết Quả Chi Tiết</span>
+            <span id="testCounterBadge" class="rounded-full bg-white px-2 py-0.5 text-[11px] font-semibold border border-[#e7e7ea] text-[#5f6470]">0 / 0</span>
+          </div>
+          <div id="testLogContainer" class="max-h-[620px] overflow-y-auto divide-y divide-[#e7e7ea] p-2 font-sans">
+            <div class="p-6 text-center text-[#5f6470]">Bấm nút <strong>"Chạy Toàn Bộ 4 Tier"</strong> ở trên để bắt đầu kiểm thử.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Live Iframe Target & Console Output (5 cols) -->
+      <div class="lg:col-span-5 flex flex-col gap-4">
+        <!-- Target Iframe -->
+        <div class="rounded-xl border border-[#e7e7ea] bg-white shadow-sm overflow-hidden flex flex-col">
+          <div class="flex items-center justify-between border-b border-[#e7e7ea] bg-[#f6f6f7] px-3 py-2 text-[11px] font-semibold text-[#5f6470]">
+            <span>Khung Ứng Dụng Đang Test (Live Iframe Sandbox)</span>
+            <button id="reloadIframeBtn" class="text-[#ed3c47] hover:underline">Tải lại</button>
+          </div>
+          <div class="h-[460px] bg-[#f6f6f7] relative">
+            <iframe id="targetIframe" class="w-full h-full border-0" src="../demo-app.html"></iframe>
+          </div>
+        </div>
+
+        <!-- Intercepted Console Log -->
+        <div class="rounded-xl border border-[#e7e7ea] bg-white shadow-sm overflow-hidden flex flex-col">
+          <div class="border-b border-[#e7e7ea] bg-[#f6f6f7] px-3 py-2 text-[11px] font-semibold text-[#5f6470] flex items-center justify-between">
+            <span>Console Errors Interceptor</span>
+            <span id="consoleStatusPill" class="rounded-full bg-[#e7f6ec] px-2 py-0.5 text-[10px] font-semibold text-[#16a34a]">0 errors</span>
+          </div>
+          <div id="consoleLogContainer" class="p-2.5 h-[140px] overflow-y-auto font-mono text-[11px] bg-[#101113] text-gray-300">
+            <div class="text-gray-500">// Bắt các thông báo lỗi console.error từ ứng dụng...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script type="module">
+    import { runner } from './e2e-runner.js';
+    import { registerTier1Tests } from './tier1-feature-coverage.js';
+    import { registerTier2Tests } from './tier2-boundary-corners.js';
+    import { registerTier3Tests } from './tier3-cross-feature.js';
+    import { registerTier4Tests } from './tier4-scenarios.js';
+    import { registerTier5Tests } from './tier5-adversarial-m1.js';
+    import { registerTier5M4Tests } from './tier5-adversarial-m4.js';
+    import { registerTier5M5Tests } from './tier5-adversarial-m5.js';
+    import { registerTier5M6Tests } from './tier5-adversarial-m6.js';
+
+    // Register all suites
+    registerTier1Tests();
+    registerTier2Tests();
+    registerTier3Tests();
+    registerTier4Tests();
+    registerTier5Tests();
+    registerTier5M4Tests();
+    registerTier5M5Tests();
+    registerTier5M6Tests();
+
+    // DOM Elements
+    const targetSelect = document.getElementById('targetSelect');
+    const targetIframe = document.getElementById('targetIframe');
+    const runAllBtn = document.getElementById('runAllBtn');
+    const exportJsonBtn = document.getElementById('exportJsonBtn');
+    const reloadIframeBtn = document.getElementById('reloadIframeBtn');
+    const testLogContainer = document.getElementById('testLogContainer');
+    const progressBar = document.getElementById('progressBar');
+    const statTotal = document.getElementById('statTotal');
+    const statPassed = document.getElementById('statPassed');
+    const statFailed = document.getElementById('statFailed');
+    const statDuration = document.getElementById('statDuration');
+    const statConsole = document.getElementById('statConsole');
+    const consoleStatusPill = document.getElementById('consoleStatusPill');
+    const consoleLogContainer = document.getElementById('consoleLogContainer');
+    const testCounterBadge = document.getElementById('testCounterBadge');
+    const tierTabs = document.querySelectorAll('.tier-tab');
+
+    let currentTierFilter = null;
+    let allTestElements = [];
+
+    // Switch iframe source
+    targetSelect.addEventListener('change', () => {
+      targetIframe.src = targetSelect.value;
+    });
+
+    reloadIframeBtn.addEventListener('click', () => {
+      targetIframe.src = targetSelect.value;
+    });
+
+    // Tier filtering
+    tierTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tierTabs.forEach(t => {
+          t.className = 'tier-tab font-semibold px-3 py-1.5 rounded-lg bg-white border border-[#e7e7ea] text-[#5f6470]';
+        });
+        tab.className = 'tier-tab font-semibold px-3 py-1.5 rounded-lg bg-[#ed3c47] text-white';
+        const tier = tab.dataset.tier;
+        currentTierFilter = tier === 'all' ? null : tier;
+        filterDisplayedLogs();
+      });
+    });
+
+    function filterDisplayedLogs() {
+      for (const el of allTestElements) {
+        if (!currentTierFilter || el.dataset.tier === currentTierFilter) {
+          el.style.display = 'flex';
+        } else {
+          el.style.display = 'none';
+        }
+      }
+    }
+
+    // Runner UI Hooks
+    runner.onTestStart = (suite, test) => {
+      // Create element
+      const div = document.createElement('div');
+      div.className = 'flex items-start justify-between py-2 px-3 text-xs hover:bg-[#f6f6f7] transition-colors';
+      div.dataset.tier = suite.tier;
+      div.id = `test-row-${runner.results.total}`;
+      div.innerHTML = `
+        <div class="flex items-start gap-2 flex-1 pr-2">
+          <span class="rounded bg-[#f6f6f7] px-1.5 py-0.5 text-[10px] font-mono font-bold text-[#5f6470] shrink-0">${suite.tier.toUpperCase()}</span>
+          <div>
+            <div class="font-medium text-[#101113]">${test.name}</div>
+            <div class="text-[10px] text-[#5f6470]">${suite.name}</div>
+          </div>
+        </div>
+        <span class="test-status font-bold text-gray-400 shrink-0">Đang chạy...</span>
+      `;
+      testLogContainer.appendChild(div);
+      allTestElements.push(div);
+      testCounterBadge.textContent = `${runner.results.total} bài test`;
+      div.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    };
+
+    runner.onTestEnd = (suite, test, record) => {
+      const row = document.getElementById(`test-row-${runner.results.total}`);
+      if (row) {
+        const statusSpan = row.querySelector('.test-status');
+        if (record.passed) {
+          statusSpan.className = 'test-status font-bold text-[#16a34a] shrink-0';
+          statusSpan.innerHTML = `✓ Đạt <span class="text-[10px] font-normal text-[#5f6470]">(${record.durationMs}ms)</span>`;
+        } else {
+          statusSpan.className = 'test-status font-bold text-[#e8590c] shrink-0';
+          statusSpan.innerHTML = `✗ Thất bại <span class="text-[10px] font-normal text-[#5f6470]">(${record.durationMs}ms)</span>`;
+          const errDiv = document.createElement('div');
+          errDiv.className = 'mt-1 p-2 bg-[#fbeee5] text-[#e8590c] font-mono text-[10px] rounded border border-[#e8590c]/30';
+          errDiv.textContent = record.error;
+          row.querySelector('div > div').appendChild(errDiv);
+        }
+      }
+      // Update stats
+      statTotal.textContent = runner.results.total;
+      statPassed.textContent = runner.results.passed;
+      statFailed.textContent = runner.results.failed;
+    };
+
+    // Run tests button
+    runAllBtn.addEventListener('click', async () => {
+      runAllBtn.disabled = true;
+      runAllBtn.textContent = 'Đang chạy test...';
+      testLogContainer.innerHTML = '';
+      allTestElements = [];
+      progressBar.style.width = '0%';
+
+      // Ensure iframe is loaded
+      let targetDoc = null;
+      try {
+        targetDoc = targetIframe.contentDocument || targetIframe.contentWindow.document;
+      } catch (e) {
+        console.warn('Iframe cross-origin or unavailable, falling back to current document', e);
+        targetDoc = document;
+      }
+
+      await runner.run(currentTierFilter, targetDoc);
+
+      // Finalize Stats
+      statDuration.textContent = `${runner.results.durationMs} ms`;
+      progressBar.style.width = '100%';
+      if (runner.results.zeroConsoleErrors) {
+        statConsole.textContent = '0 (Hoàn hảo)';
+        statConsole.className = 'mt-1 text-xl font-bold text-[#16a34a]';
+        consoleStatusPill.textContent = '0 console errors';
+        consoleStatusPill.className = 'rounded-full bg-[#e7f6ec] px-2 py-0.5 text-[10px] font-semibold text-[#16a34a]';
+      } else {
+        statConsole.textContent = `${runner.results.consoleErrors.length} lỗi`;
+        statConsole.className = 'mt-1 text-xl font-bold text-[#e8590c]';
+        consoleStatusPill.textContent = `${runner.results.consoleErrors.length} errors`;
+        consoleStatusPill.className = 'rounded-full bg-[#fbeee5] px-2 py-0.5 text-[10px] font-semibold text-[#e8590c]';
+        consoleLogContainer.innerHTML = runner.results.consoleErrors.map(e => `<div class="text-[#e8590c]">${e}</div>`).join('');
+      }
+
+      runAllBtn.disabled = false;
+      runAllBtn.textContent = 'Chạy Toàn Bộ 4 Tier';
+      filterDisplayedLogs();
+    });
+
+    // Export JSON
+    exportJsonBtn.addEventListener('click', () => {
+      const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(runner.results, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute('href', dataStr);
+      downloadAnchor.setAttribute('download', `ad-preview-e2e-report-${Date.now()}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+    });
+
+    // Auto-run if requested via query parameter ?autorun=true
+    if (window.location.search.includes('autorun=true')) {
+      targetIframe.onload = () => {
+        setTimeout(() => runAllBtn.click(), 500);
+      };
+    }
+  </script>
+</body>
+</html>

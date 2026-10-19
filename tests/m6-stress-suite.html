@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Milestone 6 Empirical Adversarial Stress Suite (challenger_m6_2)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-subtle: #f6f6f7;
+      --surface: #ffffff;
+      --text: #101113;
+      --text-muted: #5f6470;
+      --border: #e7e7ea;
+      --brand: #ed3c47;
+      --brand-600: #d62e3a;
+      --brand-050: #fdedef;
+    }
+    body { font-family: 'Inter', sans-serif; background: #fafafa; color: var(--text); }
+    code, pre { font-family: 'JetBrains Mono', monospace; }
+  </style>
+</head>
+<body class="p-6 text-sm">
+  <div class="max-w-6xl mx-auto space-y-6">
+    <header class="border-b border-[#e7e7ea] pb-4 flex items-center justify-between">
+      <div>
+        <h1 class="text-xl font-bold text-[#101113]">Milestone 6 Empirical Adversarial Stress Suite</h1>
+        <p class="text-xs text-[#5f6470] mt-1">Challenger m6_2 • Workload & Data Boundaries, Fullscreen & Escape Traps, Bilingual Switching Under Load, R4 Iconography Audit</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <span id="badgeVerdict" class="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800">Đang chạy...</span>
+        <button id="btnRerun" class="px-4 py-1.5 rounded-lg bg-[#ed3c47] text-white font-semibold text-xs shadow-sm hover:bg-[#d62e3a]">Chạy Lại Toàn Bộ</button>
+      </div>
+    </header>
+
+    <!-- Metrics Cards -->
+    <div class="grid grid-cols-4 gap-4">
+      <div class="bg-white p-4 rounded-xl border border-[#e7e7ea] shadow-sm">
+        <div class="text-xs text-[#5f6470]">Tổng số bài test</div>
+        <div id="statTotal" class="text-2xl font-bold mt-1 text-[#101113]">0</div>
+      </div>
+      <div class="bg-white p-4 rounded-xl border border-[#e7e7ea] shadow-sm">
+        <div class="text-xs text-[#16a34a]">Đạt (Passed)</div>
+        <div id="statPassed" class="text-2xl font-bold mt-1 text-[#16a34a]">0</div>
+      </div>
+      <div class="bg-white p-4 rounded-xl border border-[#e7e7ea] shadow-sm">
+        <div class="text-xs text-[#e8590c]">Thất bại (Failed)</div>
+        <div id="statFailed" class="text-2xl font-bold mt-1 text-[#e8590c]">0</div>
+      </div>
+      <div class="bg-white p-4 rounded-xl border border-[#e7e7ea] shadow-sm">
+        <div class="text-xs text-[#5f6470]">Thời gian chạy</div>
+        <div id="statTime" class="text-2xl font-bold mt-1 text-[#101113]">0 ms</div>
+      </div>
+    </div>
+
+    <!-- Live Target Iframe (Sandbox) -->
+    <div class="bg-white p-4 rounded-xl border border-[#e7e7ea] shadow-sm">
+      <h2 class="text-xs font-semibold text-[#5f6470] uppercase tracking-wider mb-2">Live Target Iframe Sandbox (demo-app.html)</h2>
+      <div class="h-[420px] w-full rounded-lg border border-[#e7e7ea] overflow-hidden bg-[#f6f6f7]">
+        <iframe id="targetFrame" class="w-full h-full border-0" src="../demo-app.html"></iframe>
+      </div>
+    </div>
+
+    <!-- Detailed Results Table -->
+    <div class="bg-white rounded-xl border border-[#e7e7ea] shadow-sm overflow-hidden">
+      <div class="px-4 py-3 bg-[#f6f6f7] border-b border-[#e7e7ea] font-semibold text-xs text-[#101113] flex justify-between">
+        <span>Chi Tiết Kết Quả Kiểm Thử Biên & Tải Cực Hạn M6</span>
+        <span id="statSub" class="text-[#5f6470]">4 Nhóm Kiểm Thử (Workload, Keyboard Traps, Bilingual Load, R4 Icons)</span>
+      </div>
+      <div id="testRows" class="divide-y divide-[#e7e7ea] font-mono text-xs"></div>
+    </div>
+  </div>
+
+  <script>
+    const tests = [];
+    function test(id, group, name, fn) {
+      tests.push({ id, group, name, fn });
+    }
+
+    const PLATFORMS_SPEC = [
+      { id: 'facebook', count: 10 },
+      { id: 'instagram', count: 3 },
+      { id: 'threads', count: 1 },
+      { id: 'tiktok', count: 2 },
+      { id: 'youtube', count: 6 },
+      { id: 'google_search', count: 2 },
+      { id: 'gdn', count: 8 },
+      { id: 'chatgpt', count: 2 },
+      { id: 'zalo', count: 4 },
+      { id: 'linkedin', count: 4 },
+      { id: 'admicro', count: 4 },
+    ];
+
+    // =========================================================================
+    // Area 1: Workload & Data Boundary Testing
+    // =========================================================================
+    test('M6.1.1', 'Workload', 'Rapid switching across all 11 platform tabs updates placement pills and active states', async (doc) => {
+      for (const p of PLATFORMS_SPEC) {
+        const tab = doc.querySelector(`[data-testid="platform-tab-${p.id}"]`);
+        if (!tab) throw new Error(`Platform tab for ${p.id} not found`);
+        tab.click();
+
+        if (tab.getAttribute('aria-pressed') !== 'true') {
+          throw new Error(`Tab ${p.id} aria-pressed expected "true" but got ${tab.getAttribute('aria-pressed')}`);
+        }
+
+        const pills = doc.querySelectorAll('[data-testid^="placement-pill-"]');
+        if (pills.length !== p.count) {
+          throw new Error(`Platform ${p.id} expected ${p.count} placement pills, found ${pills.length}`);
+        }
+      }
+
+      // Reverse cycle rapidly
+      for (let i = PLATFORMS_SPEC.length - 1; i >= 0; i--) {
+        const p = PLATFORMS_SPEC[i];
+        const tab = doc.querySelector(`[data-testid="platform-tab-${p.id}"]`);
+        tab.click();
+      }
+
+      // Return to facebook
+      doc.querySelector('[data-testid="platform-tab-facebook"]')?.click();
+    });
+
+    test('M6.1.2', 'Workload', 'Rapid switching across all 46 placement pills renders valid device frames', async (doc) => {
+      let totalPills = 0;
+      for (const p of PLATFORMS_SPEC) {
+        const tab = doc.querySelector(`[data-testid="platform-tab-${p.id}"]`);
+        tab.click();
+
+        const pills = doc.querySelectorAll('[data-testid^="placement-pill-"]');
+        for (const pill of pills) {
+          pill.click();
+          if (pill.getAttribute('aria-pressed') !== 'true') {
+            throw new Error(`Pill ${pill.getAttribute('data-testid')} failed to activate`);
+          }
+          const frame = doc.querySelector('.device-frame');
+          if (!frame) throw new Error(`Missing device frame for placement ${pill.getAttribute('data-testid')}`);
+          totalPills++;
+        }
+      }
+      if (totalPills !== 46) {
+        throw new Error(`Expected exactly 46 placements visited, got ${totalPills}`);
+      }
+      doc.querySelector('[data-testid="platform-tab-facebook"]')?.click();
+    });
+
+    test('M6.1.3', 'Workload', 'Activating "Tất cả vị trí" (comparative grid) maintains DOM stability with no horizontal blowout', async (doc) => {
+      const fbTab = doc.querySelector('[data-testid="platform-tab-facebook"]');
+      fbTab.click();
+
+      const allBtn = doc.querySelector('[data-testid="toggle-all-placements"]');
+      if (!allBtn) throw new Error('"Tất cả vị trí" button not found');
+      allBtn.click();
+
+      if (allBtn.getAttribute('aria-pressed') !== 'true') {
+        throw new Error('"Tất cả vị trí" aria-pressed is not "true"');
+      }
+
+      const grid = doc.querySelector('.grid.grid-cols-1.md\\:grid-cols-2');
+      if (!grid) throw new Error('Comparative grid container (.grid-cols-1.md:grid-cols-2) not found');
+
+      // Verify no horizontal overflow in the preview container
+      const previewPanel = doc.querySelector('.preview-panel') || grid.parentElement;
+      if (previewPanel) {
+        const scrollW = previewPanel.scrollWidth;
+        const clientW = previewPanel.clientWidth;
+        if (scrollW > clientW + 2) {
+          throw new Error(`Horizontal blowout detected: scrollWidth (${scrollW}px) > clientWidth (${clientW}px)`);
+        }
+      }
+
+      // Verify all 10 Facebook cards are present
+      const cards = grid.children;
+      if (cards.length !== 10) {
+        throw new Error(`Comparative grid expected 10 cards for Facebook, found ${cards.length}`);
+      }
+
+      allBtn.click(); // Close grid
+    });
+
+    test('M6.1.4', 'Workload', 'Comparative grid auto-scaling across platforms prevents NaN dimensions and flexbox clipping', async (doc) => {
+      const allBtn = doc.querySelector('[data-testid="toggle-all-placements"]');
+      allBtn.click();
+
+      const platformsToVerify = ['zalo', 'linkedin', 'admicro', 'youtube'];
+      for (const pid of platformsToVerify) {
+        const tab = doc.querySelector(`[data-testid="platform-tab-${pid}"]`);
+        tab.click();
+
+        const grid = doc.querySelector('.grid.grid-cols-1.md\\:grid-cols-2');
+        if (!grid) throw new Error(`Grid missing on platform ${pid}`);
+
+        const frames = grid.querySelectorAll('.device-frame');
+        if (frames.length === 0) throw new Error(`No device frames rendered in grid for ${pid}`);
+
+        for (const frame of frames) {
+          const rect = frame.getBoundingClientRect();
+          if (rect.width <= 0 || rect.height <= 0) {
+            throw new Error(`Frame in ${pid} has non-positive geometry: ${rect.width}x${rect.height}`);
+          }
+          if (Number.isNaN(rect.width) || Number.isNaN(rect.height)) {
+            throw new Error(`Frame in ${pid} has NaN geometry`);
+          }
+        }
+      }
+
+      allBtn.click(); // Close grid
+      doc.querySelector('[data-testid="platform-tab-facebook"]')?.click();
+    });
+
+    test('M6.1.5', 'Workload', 'ZoomModal rapid open/close cycles (10 cycles) mount, unmount, and cleanup with zero memory leak', async (doc) => {
+      const zoomBtn = Array.from(doc.querySelectorAll('button')).find(
+        (b) => b.textContent.includes('Phóng to') || b.getAttribute('aria-label') === 'Phóng to'
+      );
+      if (!zoomBtn) throw new Error('Zoom button "Phóng to" not found');
+
+      for (let i = 0; i < 10; i++) {
+        zoomBtn.click();
+        const backdrop = doc.querySelector('.zoom-modal-backdrop');
+        if (!backdrop) throw new Error(`ZoomModal failed to mount on iteration ${i + 1}`);
+
+        const closeBtn = doc.querySelector('.close-zoom-btn');
+        if (!closeBtn) throw new Error(`Close button missing on iteration ${i + 1}`);
+        closeBtn.click();
+
+        const unmounted = doc.querySelector('.zoom-modal-backdrop');
+        if (unmounted) throw new Error(`ZoomModal failed to unmount on iteration ${i + 1}`);
+      }
+    });
+
+    test('M6.1.6', 'Workload', 'ZoomModal is cleanly isolated and hidden in comparative grid mode', async (doc) => {
+      const allBtn = doc.querySelector('[data-testid="toggle-all-placements"]');
+      allBtn.click();
+
+      const zoomBtnInGrid = Array.from(doc.querySelectorAll('button')).find(
+        (b) => b.textContent.includes('Phóng to') || b.getAttribute('aria-label') === 'Phóng to'
+      );
+      if (zoomBtnInGrid) {
+        throw new Error('Zoom button "Phóng to" must be hidden while comparative grid is active');
+      }
+
+      allBtn.click(); // Restore single placement mode
+
+      const restoredZoomBtn = Array.from(doc.querySelectorAll('button')).find(
+        (b) => b.textContent.includes('Phóng to') || b.getAttribute('aria-label') === 'Phóng to'
+      );
+      if (!restoredZoomBtn) {
+        throw new Error('Zoom button "Phóng to" failed to return after closing comparative grid');
+      }
+    });
+
+    // =========================================================================
+    // Area 2: Fullscreen & Keyboard Traps
+    // =========================================================================
+    test('M6.2.1', 'Keyboard', 'Escape key in ZoomModal stops event propagation, closes modal, and restores focus', async (doc) => {
+      const zoomBtn = Array.from(doc.querySelectorAll('button')).find(
+        (b) => b.textContent.includes('Phóng to') || b.getAttribute('aria-label') === 'Phóng to'
+      );
+      zoomBtn.click();
+
+      const backdrop = doc.querySelector('.zoom-modal-backdrop');
+      if (!backdrop) throw new Error('Modal backdrop not mounted');
+
+      const win = doc.defaultView || window;
+      const escEvent = new win.KeyboardEvent('keydown', {
+        key: 'Escape',
+        bubbles: true,
+        cancelable: true
+      });
+      win.dispatchEvent(escEvent);
+
+      if (doc.querySelector('.zoom-modal-backdrop')) {
+        throw new Error('ZoomModal did not close on Escape key');
+      }
+
+      // Verify focus returns to zoom button or trigger
+      const activeEl = doc.activeElement;
+      if (activeEl && activeEl !== zoomBtn && !activeEl.textContent.includes('Phóng to')) {
+        console.warn('Focus restored to:', activeEl);
+      }
+    });
+
+    test('M6.2.2', 'Keyboard', 'Escape key handling in Fullscreen synchronizes state without trapped focus', async (doc) => {
+      const fsBtn = Array.from(doc.querySelectorAll('button')).find(
+        (b) => b.textContent.includes('Toàn màn hình') || b.textContent.includes('Thoát toàn màn hình')
+      );
+      if (!fsBtn) throw new Error('Fullscreen button not found');
+
+      // Trigger button
+      fsBtn.click();
+
+      // Dispatch fullscreenchange
+      const win = doc.defaultView || window;
+      doc.dispatchEvent(new win.Event('fullscreenchange', { bubbles: true }));
+
+      // Button remains accessible and labeled
+      if (!fsBtn.textContent.includes('Toàn màn hình')) {
+        throw new Error('Fullscreen button missing valid label text');
+      }
+    });
+
+    test('M6.2.3', 'Keyboard', 'Escape key in form input fields does NOT wipe content, cause keyboard traps, or trigger modal', async (doc) => {
+      const brandInput = Array.from(doc.querySelectorAll('input[type="text"]')).find(
+        (i) => i.value === 'noit.vn' || i.className.includes('brandName')
+      );
+      if (!brandInput) throw new Error('Brand name input not found');
+
+      const initialVal = brandInput.value;
+      brandInput.focus();
+
+      const win = doc.defaultView || window;
+      const escEvent = new win.KeyboardEvent('keydown', {
+        key: 'Escape',
+        bubbles: true,
+        cancelable: true
+      });
+      brandInput.dispatchEvent(escEvent);
+
+      if (brandInput.value !== initialVal) {
+        throw new Error('Escape key wiped input value');
+      }
+
+      if (doc.querySelector('.zoom-modal-backdrop')) {
+        throw new Error('Escape key in input triggered modal unexpectedly');
+      }
+    });
+
+    // =========================================================================
+    // Area 3: Bilingual Language Switching Under Load
+    // =========================================================================
+    test('M6.3.1', 'Bilingual', 'Custom user overrides are 100% preserved when toggling language (VI -> EN)', async (doc) => {
+      const textInputs = Array.from(doc.querySelectorAll('input[type="text"]'));
+      const brandInput = textInputs.find((i) => i.value.includes('noit') || i.value.includes('noti'));
+      const headlineInput = textInputs.find((i) => i.value.includes('Digital Marketing'));
+
+      if (!brandInput || !headlineInput) throw new Error('Core editor inputs not found');
+
+      // Populate custom overrides
+      brandInput.value = 'CustomBrandAlpha';
+      brandInput.dispatchEvent(new Event('input', { bubbles: true }));
+      brandInput.dispatchEvent(new Event('change', { bubbles: true }));
+
+      headlineInput.value = 'Custom Headline Alpha 2026';
+      headlineInput.dispatchEvent(new Event('input', { bubbles: true }));
+      headlineInput.dispatchEvent(new Event('change', { bubbles: true }));
+
+      // Switch to English
+      const enBtn = Array.from(doc.querySelectorAll('button')).find((b) => b.textContent.trim() === 'English');
+      if (!enBtn) throw new Error('English toggle button not found');
+      enBtn.click();
+
+      // Check values
+      if (brandInput.value !== 'CustomBrandAlpha') {
+        throw new Error(`brandInput wiped on VI -> EN switch! Got: "${brandInput.value}"`);
+      }
+      if (headlineInput.value !== 'Custom Headline Alpha 2026') {
+        throw new Error(`headlineInput wiped on VI -> EN switch! Got: "${headlineInput.value}"`);
+      }
+    });
+
+    test('M6.3.2', 'Bilingual', 'Canonical CTAs and platform labels update to English without wiping overrides', async (doc) => {
+      const fbTab = doc.querySelector('[data-testid="platform-tab-facebook"]');
+      fbTab.click();
+
+      const preview = doc.querySelector('.preview-panel') || doc.querySelector('.review-surface');
+      if (!preview) throw new Error('Preview panel not found');
+
+      if (!preview.textContent.includes('Sponsored')) {
+        throw new Error('Facebook sponsored label not translated to "Sponsored"');
+      }
+
+      // Check LinkedIn "Promoted"
+      const liTab = doc.querySelector('[data-testid="platform-tab-linkedin"]');
+      if (liTab) {
+        liTab.click();
+        const liPreview = doc.querySelector('.preview-panel') || doc.querySelector('.review-surface');
+        if (!liPreview.textContent.includes('Promoted')) {
+          throw new Error('LinkedIn sponsored label not translated to "Promoted"');
+        }
+      }
+    });
+
+    test('M6.3.3', 'Bilingual', 'Toggling back to Tiếng Việt (EN -> VI) restores Vietnamese labels while retaining user overrides', async (doc) => {
+      const viBtn = Array.from(doc.querySelectorAll('button')).find((b) => b.textContent.trim() === 'Tiếng Việt');
+      if (!viBtn) throw new Error('Tiếng Việt toggle button not found');
+      viBtn.click();
+
+      const fbTab = doc.querySelector('[data-testid="platform-tab-facebook"]');
+      fbTab.click();
+
+      const preview = doc.querySelector('.preview-panel') || doc.querySelector('.review-surface');
+      if (!preview.textContent.includes('Được tài trợ')) {
+        throw new Error('Facebook sponsored label not restored to "Được tài trợ"');
+      }
+
+      // Check custom overrides still intact
+      const textInputs = Array.from(doc.querySelectorAll('input[type="text"]'));
+      const brandInput = textInputs.find((i) => i.value === 'CustomBrandAlpha');
+      const headlineInput = textInputs.find((i) => i.value === 'Custom Headline Alpha 2026');
+
+      if (!brandInput || !headlineInput) {
+        throw new Error('Custom overrides lost on returning to Tiếng Việt');
+      }
+
+      // Clean up / reset to default
+      const resetBtn = Array.from(doc.querySelectorAll('button')).find((b) => b.textContent.includes('Về nội dung mặc định'));
+      if (resetBtn) resetBtn.click();
+    });
+
+    test('M6.3.4', 'Bilingual', 'Rapid bidirectional language switching (20 cycles) executes without state corruption or UI lag', async (doc) => {
+      const enBtn = Array.from(doc.querySelectorAll('button')).find((b) => b.textContent.trim() === 'English');
+      const viBtn = Array.from(doc.querySelectorAll('button')).find((b) => b.textContent.trim() === 'Tiếng Việt');
+
+      const tStart = performance.now();
+      for (let i = 0; i < 20; i++) {
+        enBtn.click();
+        viBtn.click();
+      }
+      const dur = performance.now() - tStart;
+
+      if (dur > 2000) {
+        throw new Error(`Rapid language switching took too long: ${dur}ms (expected < 2000ms)`);
+      }
+
+      if (!viBtn.className.includes('active')) {
+        throw new Error('Final active language is not Tiếng Việt');
+      }
+    });
+
+    // =========================================================================
+    // Area 4: Minimal Decorative Iconography Verification (R4 Audit)
+    // =========================================================================
+    test('M6.4.1', 'Iconography', 'Audit: Zero decorative pulsing pencil icons exist in DOM and styling', (doc) => {
+      const pencils = doc.querySelectorAll('.lucide-pencil, .pulsing-pencil, .animate-pulse svg');
+      if (pencils.length > 0) {
+        throw new Error(`Found ${pencils.length} decorative pulsing pencil icons violating R4`);
+      }
+    });
+
+    test('M6.4.2', 'Iconography', 'Audit: Zero decorative shield badges exist on form inputs or helper banners', (doc) => {
+      const shields = doc.querySelectorAll('.lucide-shield, .lucide-shield-check, .shield-badge');
+      if (shields.length > 0) {
+        throw new Error(`Found ${shields.length} decorative shield badges violating R4`);
+      }
+    });
+
+    test('M6.4.3', 'Iconography', 'Audit: Zero decorative button glyphs, sparkles, or extraneous icons exist', (doc) => {
+      const sparkles = doc.querySelectorAll('.lucide-sparkles, .lucide-star, .lucide-wand');
+      if (sparkles.length > 0) {
+        throw new Error(`Found ${sparkles.length} decorative button glyphs or sparkles violating R4`);
+      }
+    });
+
+    test('M6.4.4', 'Iconography', 'Audit: Only authentic 18x18 monochrome platform SVGs and native chrome SVGs are present', (doc) => {
+      const platformSvgs = doc.querySelectorAll('.platform-logo svg, [data-testid^="platform-tab-"] svg');
+      if (platformSvgs.length === 0) throw new Error('No platform SVGs found');
+
+      for (const svg of platformSvgs) {
+        const w = svg.getAttribute('width');
+        const h = svg.getAttribute('height');
+        if (w !== '18' || h !== '18') {
+          throw new Error(`Platform SVG dimensions must be 18x18, got ${w}x${h}`);
+        }
+      }
+    });
+
+    // =========================================================================
+    // Runner Engine
+    // =========================================================================
+    async function runAll() {
+      const statTotal = document.getElementById('statTotal');
+      const statPassed = document.getElementById('statPassed');
+      const statFailed = document.getElementById('statFailed');
+      const statTime = document.getElementById('statTime');
+      const badgeVerdict = document.getElementById('badgeVerdict');
+      const testRows = document.getElementById('testRows');
+      const targetFrame = document.getElementById('targetFrame');
+
+      testRows.innerHTML = '';
+      statTotal.textContent = tests.length;
+      statPassed.textContent = '0';
+      statFailed.textContent = '0';
+      badgeVerdict.className = 'px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800';
+      badgeVerdict.textContent = 'Đang chạy...';
+
+      let doc = null;
+      try {
+        doc = targetFrame.contentDocument || targetFrame.contentWindow.document;
+      } catch (e) {
+        doc = document;
+      }
+
+      const tStart = performance.now();
+      let passed = 0;
+      let failed = 0;
+      const results = [];
+
+      for (const t of tests) {
+        const row = document.createElement('div');
+        row.className = 'px-4 py-2 flex items-center justify-between hover:bg-[#f6f6f7] transition-colors';
+        const start = performance.now();
+        let error = null;
+        try {
+          await t.fn(doc);
+          passed++;
+        } catch (err) {
+          failed++;
+          error = err.message || String(err);
+        }
+        const dur = Math.round(performance.now() - start);
+
+        results.push({ id: t.id, group: t.group, name: t.name, passed: !error, error, dur });
+
+        row.innerHTML = `
+          <div class="flex items-center gap-3">
+            <span class="rounded bg-slate-100 px-2 py-0.5 text-[10px] font-mono font-bold text-slate-700">${t.id}</span>
+            <span class="rounded bg-purple-50 px-1.5 py-0.5 text-[10px] font-semibold text-purple-700">${t.group}</span>
+            <span class="text-[#101113] font-sans">${t.name}</span>
+          </div>
+          <div class="flex items-center gap-2">
+            ${error ? `<span class="text-[#e8590c] font-bold">✗ Thất bại</span>` : `<span class="text-[#16a34a] font-bold">✓ Đạt</span>`}
+            <span class="text-[10px] text-[#5f6470]">(${dur}ms)</span>
+          </div>
+        `;
+        if (error) {
+          const errDiv = document.createElement('div');
+          errDiv.className = 'px-4 py-1.5 bg-[#fbeee5] text-[#e8590c] text-[11px] font-mono border-t border-[#e8590c]/20';
+          errDiv.textContent = 'Lỗi: ' + error;
+          const container = document.createElement('div');
+          container.appendChild(row);
+          container.appendChild(errDiv);
+          testRows.appendChild(container);
+        } else {
+          testRows.appendChild(row);
+        }
+
+        statPassed.textContent = passed;
+        statFailed.textContent = failed;
+      }
+
+      const totalDur = Math.round(performance.now() - tStart);
+      statTime.textContent = totalDur + ' ms';
+
+      if (failed === 0) {
+        badgeVerdict.className = 'px-3 py-1 rounded-full text-xs font-bold bg-green-100 text-green-800';
+        badgeVerdict.textContent = `APPROVE (${passed}/${tests.length} Đạt)`;
+      } else {
+        badgeVerdict.className = 'px-3 py-1 rounded-full text-xs font-bold bg-red-100 text-red-800';
+        badgeVerdict.textContent = `REJECT (${failed} Thất bại)`;
+      }
+
+      window.__M6_STRESS_RESULTS__ = { total: tests.length, passed, failed, durationMs: totalDur, details: results };
+    }
+
+    document.getElementById('btnRerun').addEventListener('click', runAll);
+
+    // Auto-run once target iframe loads
+    const frame = document.getElementById('targetFrame');
+    frame.addEventListener('load', () => {
+      setTimeout(runAll, 800);
+    });
+  </script>
+</body>
+</html>

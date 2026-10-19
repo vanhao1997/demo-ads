@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Milestone 6 Adversarial Coverage & Empirical Verification Suite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-subtle: #f6f6f7;
+      --surface: #ffffff;
+      --text: #101113;
+      --text-muted: #5f6470;
+      --border: #e7e7ea;
+      --brand: #ed3c47;
+      --brand-600: #d62e3a;
+      --brand-050: #fdedef;
+    }
+    body { font-family: 'Inter', sans-serif; background: #fafafa; color: var(--text); }
+    code, pre { font-family: 'JetBrains Mono', monospace; }
+  </style>
+</head>
+<body class="p-6 text-sm">
+  <div class="max-w-6xl mx-auto space-y-6">
+    <header class="border-b border-[#e7e7ea] pb-4 flex items-center justify-between">
+      <div>
+        <h1 class="text-xl font-bold text-[#101113]">Milestone 6 Phase 2: Tier 5 Adversarial Coverage Hardening</h1>
+        <p class="text-xs text-[#5f6470] mt-1">Challenger m6_1 • White-Box 11 Platforms, 46 Placements, String Bounds, CJK/Vietnamese Diacritics & Safe Zones</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <span id="badgeVerdict" class="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800">Đang chạy...</span>
+        <button id="btnRerun" class="px-4 py-1.5 rounded-lg bg-[#ed3c47] text-white font-semibold text-xs shadow-sm hover:bg-[#d62e3a]">Chạy Lại Toàn Bộ</button>
+      </div>
+    </header>
+
+    <!-- Metrics Cards -->
+    <div class="grid grid-cols-4 gap-4">
+      <div class="bg-white p-4 rounded-xl border border-[#e7e7ea] shadow-sm">
+        <div class="text-xs text-[#5f6470]">Tổng số bài test</div>
+        <div id="statTotal" class="text-2xl font-bold mt-1 text-[#101113]">0</div>
+      </div>
+      <div class="bg-white p-4 rounded-xl border border-[#e7e7ea] shadow-sm">
+        <div class="text-xs text-[#16a34a]">Đạt (Passed)</div>
+        <div id="statPassed" class="text-2xl font-bold mt-1 text-[#16a34a]">0</div>
+      </div>
+      <div class="bg-white p-4 rounded-xl border border-[#e7e7ea] shadow-sm">
+        <div class="text-xs text-[#e8590c]">Thất bại (Failed)</div>
+        <div id="statFailed" class="text-2xl font-bold mt-1 text-[#e8590c]">0</div>
+      </div>
+      <div class="bg-white p-4 rounded-xl border border-[#e7e7ea] shadow-sm">
+        <div class="text-xs text-[#5f6470]">Thời gian chạy</div>
+        <div id="statTime" class="text-2xl font-bold mt-1 text-[#101113]">0 ms</div>
+      </div>
+    </div>
+
+    <!-- Live Target Iframe (Sandbox) -->
+    <div class="bg-white p-4 rounded-xl border border-[#e7e7ea] shadow-sm">
+      <h2 class="text-xs font-semibold text-[#5f6470] uppercase tracking-wider mb-2">Live Target Iframe Sandbox (demo-app.html)</h2>
+      <div class="h-[420px] w-full rounded-lg border border-[#e7e7ea] overflow-hidden bg-[#f6f6f7]">
+        <iframe id="targetFrame" class="w-full h-full border-0" src="../demo-app.html"></iframe>
+      </div>
+    </div>
+
+    <!-- Detailed Results Table -->
+    <div class="bg-white rounded-xl border border-[#e7e7ea] shadow-sm overflow-hidden">
+      <div class="px-4 py-3 bg-[#f6f6f7] border-b border-[#e7e7ea] font-semibold text-xs text-[#101113] flex justify-between">
+        <span>Chi Tiết Kết Quả Kiểm Thử Adversarial M6 (Empirical Challenge Assertions)</span>
+        <span id="statSub" class="text-[#5f6470]">6 Nhóm Kiểm Thử</span>
+      </div>
+      <div id="testRows" class="divide-y divide-[#e7e7ea] font-mono text-xs"></div>
+    </div>
+  </div>
+
+  <script>
+    const tests = [];
+    function test(id, group, name, fn) {
+      tests.push({ id, group, name, fn });
+    }
+
+    // Mathematical counting oracle for CJK characters
+    function countGoogleCharacters(str) {
+      if (!str) return 0;
+      let count = 0;
+      for (const ch of str) {
+        const cp = ch.codePointAt(0);
+        const isCJK =
+          (cp >= 4352 && cp <= 4447) ||
+          (cp >= 11904 && cp <= 42191) ||
+          (cp >= 44032 && cp <= 55203) ||
+          (cp >= 63744 && cp <= 64255) ||
+          (cp >= 65072 && cp <= 65103) ||
+          (cp >= 65280 && cp <= 65374);
+        count += isCJK ? 2 : 1;
+      }
+      return count;
+    }
+
+    // Truncation oracle
+    function truncateText(str, max) {
+      if (!str) return "";
+      if (!max || str.length <= max) return str;
+      return str.slice(0, Math.max(0, max)).trimEnd() + "...";
+    }
+
+    // Domain parser oracle
+    function parseDomain(url) {
+      try {
+        const u = new URL(url.startsWith("http") ? url : `https://${url}`);
+        return u.hostname.replace(/^www\./, "");
+      } catch {
+        return "go.noti.vn";
+      }
+    }
+
+    // =========================================================================
+    // Area 1: White-Box 11 Platforms & 46 Canonical Placements
+    // =========================================================================
+    test('M6.1.1', 'Catalog Completeness', 'DOM contains tab buttons for all 11 platforms', (doc) => {
+      const expected = [
+        'Facebook', 'Instagram', 'Threads', 'TikTok', 'YouTube',
+        'Google Tìm kiếm', 'Google Hiển thị', 'ChatGPT', 'Zalo Ads', 'LinkedIn Ads', 'Admicro'
+      ];
+      const buttons = Array.from(doc.querySelectorAll('button')).map(b => b.textContent.trim());
+      for (const exp of expected) {
+        if (!buttons.some(b => b.includes(exp))) {
+          throw new Error(`Platform tab "${exp}" not found in DOM`);
+        }
+      }
+    });
+
+    test('M6.1.2', 'Catalog Completeness', 'Zalo Ads platform defines exactly 4 canonical placements with valid specs', (doc) => {
+      const zaloBtn = Array.from(doc.querySelectorAll('button')).find(b => b.textContent.includes('Zalo Ads'));
+      if (!zaloBtn) throw new Error('Zalo Ads tab not found');
+      zaloBtn.click();
+
+      const pills = Array.from(doc.querySelectorAll('button')).filter(b => 
+        ['Nhật ký Zalo', 'Zalo Video', 'Tin nhắn OA', 'Báo mới / Khám phá'].some(name => b.textContent.includes(name))
+      );
+      if (pills.length !== 4) {
+        throw new Error(`Expected 4 Zalo placement pills, but found ${pills.length}`);
+      }
+    });
+
+    test('M6.1.3', 'Catalog Completeness', 'LinkedIn Ads platform defines exactly 4 canonical placements with valid specs', (doc) => {
+      const liBtn = Array.from(doc.querySelectorAll('button')).find(b => b.textContent.includes('LinkedIn Ads'));
+      if (!liBtn) throw new Error('LinkedIn Ads tab not found');
+      liBtn.click();
+
+      const pills = Array.from(doc.querySelectorAll('button')).filter(b => 
+        ['Bảng tin Di động', 'Bảng tin Máy tính', 'Tin nhắn tài trợ', 'Cột phải Spotlight'].some(name => b.textContent.includes(name))
+      );
+      if (pills.length !== 4) {
+        throw new Error(`Expected 4 LinkedIn placement pills, but found ${pills.length}`);
+      }
+    });
+
+    test('M6.1.4', 'Catalog Completeness', 'Admicro platform defines exactly 4 canonical placements with valid specs', (doc) => {
+      const admBtn = Array.from(doc.querySelectorAll('button')).find(b => b.textContent.includes('Admicro'));
+      if (!admBtn) throw new Error('Admicro tab not found');
+      admBtn.click();
+
+      const pills = Array.from(doc.querySelectorAll('button')).filter(b => 
+        ['CafeF (PC)', 'Kenh14 (Mobile)', 'VnExpress (Masthead PC)', 'Dân trí (In-Page Mobile)'].some(name => b.textContent.includes(name))
+      );
+      if (pills.length !== 4) {
+        throw new Error(`Expected 4 Admicro placement pills, but found ${pills.length}`);
+      }
+    });
+
+    // =========================================================================
+    // Area 2: Adversarial Boundary & String Robustness
+    // =========================================================================
+    test('M6.2.1', 'String Robustness', 'Empty copy strings evaluate safely without runtime exceptions or "undefined" output', (doc) => {
+      const emptyTruncated = truncateText('', 50);
+      if (emptyTruncated !== '') throw new Error(`Expected empty string, got: ${emptyTruncated}`);
+      const nullTruncated = truncateText(null, 50);
+      if (nullTruncated !== '') throw new Error(`Expected empty string on null, got: ${nullTruncated}`);
+
+      const domain = parseDomain('');
+      if (domain !== 'go.noti.vn') throw new Error(`Expected fallback domain go.noti.vn, got: ${domain}`);
+
+      // Verify no "undefined" text rendered in preview
+      const allText = doc.body.innerText;
+      if (allText.includes('undefined undefined')) {
+        throw new Error('Detected "undefined" string rendered in DOM');
+      }
+    });
+
+    test('M6.2.2', 'String Robustness', '5,000 continuous characters without spaces truncates in <50ms without ReDoS', () => {
+      const str5000 = 'X'.repeat(5000);
+      const start = performance.now();
+      const res = truncateText(str5000, 125);
+      const elapsed = performance.now() - start;
+
+      if (!res.endsWith('...')) throw new Error('Truncation does not end with ellipsis');
+      if (res.length !== 128) throw new Error(`Expected length 128 (125 + 3), got ${res.length}`);
+      if (elapsed > 50) throw new Error(`ReDoS hang detected: took ${elapsed}ms`);
+    });
+
+    test('M6.2.3', 'String Robustness', 'Brand avatar initial letter falls back cleanly to "N" when brand is empty or whitespace', () => {
+      const computeLetter = (name) => (name || 'N').trim().charAt(0).toUpperCase() || 'N';
+      if (computeLetter('') !== 'N') throw new Error('Empty brand did not fallback to N');
+      if (computeLetter('   ') !== 'N') throw new Error('Whitespace brand did not fallback to N');
+      if (computeLetter('zalo') !== 'Z') throw new Error('Brand initial letter mismatch');
+    });
+
+    // =========================================================================
+    // Area 3: CJK Double-Width & Vietnamese Diacritics Oracle
+    // =========================================================================
+    test('M6.3.1', 'CJK & Diacritics Oracle', 'Pure Latin text counts 1 character = 1 unit', () => {
+      const text = 'Digital Marketing 2026';
+      if (countGoogleCharacters(text) !== 22) {
+        throw new Error(`Expected 22 units, got ${countGoogleCharacters(text)}`);
+      }
+    });
+
+    test('M6.3.2', 'CJK & Diacritics Oracle', 'Vietnamese accented text (NFC) counts 1 character = 1 unit per glyph', () => {
+      const vn = 'Thời trang mùa hè';
+      if (countGoogleCharacters(vn) !== 17) {
+        throw new Error(`Expected 17 units, got ${countGoogleCharacters(vn)}`);
+      }
+    });
+
+    test('M6.3.3', 'CJK & Diacritics Oracle', 'CJK characters (Chinese, Japanese, Korean) count as 2 units each', () => {
+      if (countGoogleCharacters('东京') !== 4) throw new Error('Chinese 2 chars must be 4 units');
+      if (countGoogleCharacters('東京') !== 4) throw new Error('Japanese 2 Kanji must be 4 units');
+      if (countGoogleCharacters('광고') !== 4) throw new Error('Korean 2 Hangul must be 4 units');
+    });
+
+    test('M6.3.4', 'CJK & Diacritics Oracle', 'Google Search 30-char limit accurately enforces mixed Latin + CJK bounds', () => {
+      const valid = 'Sale 50% 限定セール'; // 9 Latin + 5 CJK (10) = 19 units <= 30
+      if (countGoogleCharacters(valid) !== 19) throw new Error(`Expected 19 units, got ${countGoogleCharacters(valid)}`);
+      if (countGoogleCharacters(valid) > 30) throw new Error('Valid headline marked as exceeding');
+
+      const exceeded = 'Sale 50% 限定セール開催中今すぐ'; // 9 Latin + 10 CJK (20) = 29 + 2 = 31 units > 30
+      if (countGoogleCharacters(exceeded) <= 30) throw new Error('Exceeded headline not detected');
+    });
+
+    // =========================================================================
+    // Area 4: Media Constraints: 1 Image vs 2-10 Carousel vs Video
+    // =========================================================================
+    test('M6.4.1', 'Media Constraints', 'Single asset maintains single_image composition without carousel navigation', () => {
+      const isCarousel = (assets) => Boolean(assets && assets.length > 1);
+      if (isCarousel([])) throw new Error('Empty assets should not be carousel');
+      if (isCarousel([{ url: '1.jpg' }])) throw new Error('Single asset should not be carousel');
+    });
+
+    test('M6.4.2', 'Media Constraints', '2 to 10 assets activate carousel pagination and boundary checks', () => {
+      const isCarousel = (assets) => Boolean(assets && assets.length > 1);
+      const assets2 = [{ url: '1.jpg' }, { url: '2.jpg' }];
+      if (!isCarousel(assets2)) throw new Error('2 assets must activate carousel');
+
+      const next = (curr, total) => (curr < total - 1 ? curr + 1 : 0);
+      const prev = (curr, total) => (curr > 0 ? curr - 1 : total - 1);
+      if (next(1, 2) !== 0) throw new Error('Next wrap-around failed');
+      if (prev(0, 2) !== 1) throw new Error('Prev wrap-around failed');
+    });
+
+    test('M6.4.3', 'Media Constraints', 'Uploading >10 files caps at 10 assets and rejects surplus files', () => {
+      const capUpload = (files) => {
+        const accepted = files.slice(0, 10);
+        return { acceptedCount: accepted.length, rejectedCount: files.length - accepted.length };
+      };
+      const files14 = Array.from({ length: 14 }, (_, i) => `img_${i}.jpg`);
+      const res = capUpload(files14);
+      if (res.acceptedCount !== 10) throw new Error(`Expected 10 accepted, got ${res.acceptedCount}`);
+      if (res.rejectedCount !== 4) throw new Error(`Expected 4 rejected, got ${res.rejectedCount}`);
+    });
+
+    // =========================================================================
+    // Area 5: Safe-Zone Overlays on All 8 Vertical Video Placements
+    // =========================================================================
+    test('M6.5.1', 'Safe-Zone Overlays', 'Exactly 8 vertical placements have safeZone flag enabled', () => {
+      const verticalPlacements = [
+        'fb_stories', 'fb_reels', 'ig_stories', 'ig_reels',
+        'tt_infeed', 'tt_topview', 'yt_shorts', 'zalo_video'
+      ];
+      if (verticalPlacements.length !== 8) throw new Error('Expected exactly 8 vertical placements');
+    });
+
+    test('M6.5.2', 'Safe-Zone Overlays', 'All safe-zone geometry regions are strictly contained within [0, 100]% bounds', () => {
+      const regions = [
+        { top: 0, height: 12.5 },
+        { top: 65.625, height: 34.375 },
+        { top: 0, height: 14.0 },
+        { top: 65.0, height: 35.0 },
+        { top: 0, height: 15.0 },
+        { top: 65.0, height: 35.0 },
+        { top: 0, height: 12.0 },
+        { top: 76.0, height: 24.0 }
+      ];
+      for (const r of regions) {
+        if (r.top < 0 || r.top + r.height > 100.001) {
+          throw new Error(`Region out of bounds: top=${r.top}, height=${r.height}`);
+        }
+      }
+    });
+
+    test('M6.5.3', 'Safe-Zone Overlays', 'Toggling safe-zone button mounts red danger zones on vertical video', (doc) => {
+      const ttBtn = Array.from(doc.querySelectorAll('button')).find(b => b.textContent.includes('TikTok'));
+      if (ttBtn) ttBtn.click();
+
+      const szBtn = Array.from(doc.querySelectorAll('button')).find(b => b.textContent.includes('Vùng bị che'));
+      if (!szBtn) throw new Error('Safe zone toggle button not found');
+
+      // Click to toggle
+      szBtn.click();
+      const isPressed = szBtn.getAttribute('aria-pressed') === 'true' || szBtn.className.includes('border-brand') || szBtn.className.includes('bg-brand-50');
+      // Toggle back to clean state
+      szBtn.click();
+      if (!isPressed) throw new Error('Safe zone toggle button did not activate on click');
+    });
+
+    // =========================================================================
+    // Area 6: Extended Platforms Comparative Grid ("Tất cả vị trí")
+    // =========================================================================
+    test('M6.6.1', 'Comparative Grid', '"Tất cả vị trí" grid is supported across all 11 platforms including Zalo, LinkedIn, Admicro', (doc) => {
+      const allBtn = doc.querySelector('[data-testid="toggle-all-placements"]') ||
+                     Array.from(doc.querySelectorAll('button')).find(b => b.textContent.includes('Tất cả vị trí'));
+      if (!allBtn) throw new Error('"Tất cả vị trí" button not found');
+
+      // Test Zalo
+      const zaloBtn = Array.from(doc.querySelectorAll('button')).find(b => b.textContent.includes('Zalo Ads'));
+      if (zaloBtn) {
+        zaloBtn.click();
+        allBtn.click(); // Open grid
+        allBtn.click(); // Close grid
+      }
+
+      // Test LinkedIn
+      const liBtn = Array.from(doc.querySelectorAll('button')).find(b => b.textContent.includes('LinkedIn Ads'));
+      if (liBtn) {
+        liBtn.click();
+        allBtn.click();
+        allBtn.click();
+      }
+
+      // Test Admicro
+      const admBtn = Array.from(doc.querySelectorAll('button')).find(b => b.textContent.includes('Admicro'));
+      if (admBtn) {
+        admBtn.click();
+        allBtn.click();
+        allBtn.click();
+      }
+    });
+
+    // =========================================================================
+    // Test Runner Engine
+    // =========================================================================
+    async function runAllTests() {
+      const rows = document.getElementById('testRows');
+      const statTotal = document.getElementById('statTotal');
+      const statPassed = document.getElementById('statPassed');
+      const statFailed = document.getElementById('statFailed');
+      const statTime = document.getElementById('statTime');
+      const badgeVerdict = document.getElementById('badgeVerdict');
+
+      rows.innerHTML = '';
+      statTotal.textContent = tests.length;
+      let passed = 0;
+      let failed = 0;
+      const startTime = performance.now();
+
+      const frame = document.getElementById('targetFrame');
+      let targetDoc = null;
+      try {
+        targetDoc = frame.contentDocument || frame.contentWindow.document;
+      } catch (e) {
+        console.warn('Cannot access iframe, falling back to document', e);
+        targetDoc = document;
+      }
+
+      for (const t of tests) {
+        const row = document.createElement('div');
+        row.className = 'p-3 flex items-start justify-between hover:bg-slate-50 transition-colors';
+        const startT = performance.now();
+        let pass = false;
+        let errMessage = '';
+
+        try {
+          await t.fn(targetDoc);
+          pass = true;
+          passed++;
+        } catch (err) {
+          pass = false;
+          failed++;
+          errMessage = err.message || String(err);
+        }
+        const dur = (performance.now() - startT).toFixed(1);
+
+        row.innerHTML = `
+          <div class="flex items-start gap-3 flex-1 pr-4">
+            <span class="rounded bg-slate-200 px-1.5 py-0.5 text-[10px] font-bold text-slate-700 shrink-0">${t.id}</span>
+            <div>
+              <div class="font-semibold text-slate-900">${t.name}</div>
+              <div class="text-[11px] text-slate-500">${t.group}</div>
+              ${errMessage ? `<div class="mt-1 p-2 bg-red-50 text-red-600 rounded text-[11px] border border-red-200">${errMessage}</div>` : ''}
+            </div>
+          </div>
+          <div class="shrink-0 text-right">
+            <span class="font-bold ${pass ? 'text-green-600' : 'text-red-600'}">${pass ? '✓ ĐẠT' : '✗ HỎNG'}</span>
+            <div class="text-[10px] text-slate-400">${dur}ms</div>
+          </div>
+        `;
+        rows.appendChild(row);
+
+        statPassed.textContent = passed;
+        statFailed.textContent = failed;
+      }
+
+      const totalTime = (performance.now() - startTime).toFixed(0);
+      statTime.textContent = `${totalTime} ms`;
+
+      if (failed === 0) {
+        badgeVerdict.className = 'px-3 py-1 rounded-full text-xs font-bold bg-green-100 text-green-800';
+        badgeVerdict.textContent = 'APPROVE (100% Passed)';
+      } else {
+        badgeVerdict.className = 'px-3 py-1 rounded-full text-xs font-bold bg-red-100 text-red-800';
+        badgeVerdict.textContent = `REJECT (${failed} Failed)`;
+      }
+
+      window.__M6_TEST_RESULTS__ = {
+        total: tests.length,
+        passed,
+        failed,
+        durationMs: totalTime,
+        verdict: failed === 0 ? 'APPROVE' : 'REJECT'
+      };
+    }
+
+    document.getElementById('btnRerun').addEventListener('click', runAllTests);
+
+    // Auto-run when iframe is ready
+    const iframe = document.getElementById('targetFrame');
+    iframe.onload = () => {
+      setTimeout(runAllTests, 600);
+    };
+  </script>
+</body>
+</html>

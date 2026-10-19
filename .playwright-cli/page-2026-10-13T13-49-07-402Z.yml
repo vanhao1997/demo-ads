@@ -1,0 +1,305 @@
+- generic [ref=e3]:
+  - link "Tới workspace" [ref=e4] [cursor=pointer]:
+    - /url: "#main"
+  - banner [ref=e5]:
+    - link "a adcraft preview lab" [ref=e6] [cursor=pointer]:
+      - /url: "#main"
+      - generic [ref=e7]: a
+      - text: adcraft
+      - generic [ref=e8]: preview lab
+    - generic [ref=e9]:
+      - text: Phiên local
+      - generic [ref=e11]: MVP
+    - generic [ref=e12]:
+      - button "Nhập nháp / ZIP" [ref=e13] [cursor=pointer]
+      - button "Xuất JSON" [ref=e16] [cursor=pointer]
+      - button "Gói review" [ref=e19] [cursor=pointer]
+  - generic [ref=e22]:
+    - navigation "Điều hướng" [ref=e23]:
+      - button "Workspace" [ref=e24] [cursor=pointer]
+      - button "So sánh" [ref=e30] [cursor=pointer]
+      - button "Catalog" [ref=e33] [cursor=pointer]
+      - generic [ref=e38]: LOCAL
+    - main [ref=e43]:
+      - generic [ref=e44]:
+        - generic [ref=e45]:
+          - generic [ref=e46]: PREVIEW LAB / WORKSPACE
+          - heading "Creative workspace." [level=1] [ref=e47]
+          - paragraph [ref=e48]: Chỉnh nội dung. Chọn vị trí. Kiểm tra trước khi chạy.
+        - generic [ref=e53]:
+          - strong [ref=e54]: Media ở trên thiết bị
+          - generic [ref=e55]: Tải lại trang sẽ mất nháp
+      - region "Chọn nền tảng" [ref=e56]:
+        - generic [ref=e57]:
+          - button "Facebook" [pressed] [ref=e58] [cursor=pointer]:
+            - img "Facebook" [ref=e60]
+            - text: Facebook
+          - button "Instagram" [ref=e63] [cursor=pointer]:
+            - img "Instagram" [ref=e65]
+            - text: Instagram
+          - button "Threads" [ref=e68] [cursor=pointer]:
+            - img "Threads" [ref=e70]
+            - text: Threads
+          - button "TikTok" [ref=e73] [cursor=pointer]:
+            - img "TikTok" [ref=e75]
+            - text: TikTok
+          - button "YouTube" [ref=e78] [cursor=pointer]:
+            - img "YouTube" [ref=e80]
+            - text: YouTube
+          - button "Google Search" [ref=e83] [cursor=pointer]:
+            - img "Google Search" [ref=e85]
+            - text: Google Search
+          - button "Google Display" [ref=e88] [cursor=pointer]:
+            - img "Google Display" [ref=e90]
+            - text: Google Display
+          - button "ChatGPT" [ref=e93] [cursor=pointer]:
+            - img "ChatGPT" [ref=e95]: Ch
+            - text: ChatGPT
+          - button "Zalo Ads" [ref=e96] [cursor=pointer]:
+            - img "Zalo Ads" [ref=e98]
+            - text: Zalo Ads
+          - button "Admicro" [ref=e101] [cursor=pointer]:
+            - img "Admicro" [ref=e103]: Ad
+            - text: Admicro
+        - generic [ref=e104]:
+          - generic [ref=e105]:
+            - generic [ref=e107]: Vị trí / product
+            - combobox "Vị trí / product" [ref=e108]:
+              - option "Feed · Meta Ads" [selected]
+              - option "Video Feeds · Meta Ads"
+              - option "Stories · Meta Ads"
+              - option "Reels · Meta Ads"
+              - option "Reels banner · Meta Ads"
+              - option "In-stream · Meta Ads"
+              - option "Marketplace · Meta Ads"
+              - option "Search results · Meta Ads"
+              - option "Right column · Meta Ads"
+              - option "Audience Network · Meta Ads"
+          - generic [ref=e109]: Tham khảo
+          - button "Nguồn thông số" [ref=e113] [cursor=pointer]
+      - group [ref=e116]:
+        - generic "Điều kiện chiến dịch Vietnam · Chưa kết nối tài khoản" [ref=e117] [cursor=pointer]:
+          - text: Điều kiện chiến dịch
+          - generic [ref=e118]: Vietnam · Chưa kết nối tài khoản
+        - option "Chưa chọn" [selected]
+        - option "Nhận diện"
+        - option "Lưu lượng"
+        - option "Lead"
+        - option "Doanh số"
+        - option "Tương tác"
+      - generic [ref=e119]:
+        - region "Preview quảng cáo" [ref=e120]:
+          - generic [ref=e121]:
+            - heading "02 Xem trước" [level=2] [ref=e122]:
+              - generic [ref=e123]: "02"
+              - text: Xem trước
+            - generic [ref=e124]: Live
+          - generic [ref=e126]:
+            - generic [ref=e127]:
+              - generic [ref=e128]: Khung xem
+              - combobox "Khung mockup thiết bị" [ref=e129]:
+                - option "Theo target" [selected]
+                - option "Mobile · iPhone 15 / 16"
+                - option "PC · 1440 × 900"
+            - generic [ref=e130]:
+              - button "Chỉnh crop target" [ref=e131] [cursor=pointer]
+              - button "Contain media" [ref=e133] [cursor=pointer]
+              - button "Bật tắt safe zone" [pressed] [ref=e139] [cursor=pointer]
+          - generic "Giao diện mô phỏng nền tảng" [ref=e143]:
+            - generic [ref=e144]:
+              - text: Ngôn ngữ app
+              - combobox "Ngôn ngữ giao diện nền tảng" [ref=e145]:
+                - option "Tiếng Việt" [selected]
+                - option "English"
+            - generic [ref=e146]:
+              - checkbox "Giao diện app" [checked] [ref=e147]
+              - text: Giao diện app
+            - generic [ref=e148]: Ngữ cảnh và tương tác demo. Nội dung quảng cáo giữ nguyên; vùng che là ước lượng.
+          - generic [ref=e152]:
+            - strong [ref=e153]: iPhone 15 / 16 (6,1 inch)
+            - generic [ref=e154]: 393 × 852 điểm · Thu nhỏ đúng tỉ lệ
+            - generic [ref=e155]: "Target: Mobile · Khung xem không đổi thông số quảng cáo."
+          - generic [ref=e156]:
+            - generic [ref=e161]:
+              - generic [ref=e162]:
+                - strong [ref=e163]: Facebook / Feed
+                - generic [ref=e164]: Tham khảo · 2026.10.12-mvp
+              - group "iPhone 15 / 16 preview viewport" [ref=e167]:
+                - region "Cuộn nội dung trong mockup" [ref=e168]:
+                  - article [ref=e172]:
+                    - generic [aria-hidden] [ref=e173]:
+                      - generic [ref=e174]: facebook
+                      - generic [ref=e175]: Tìm kiếm
+                    - generic [ref=e176]: Tương tác demo
+                    - generic [ref=e177]:
+                      - generic [ref=e178]:
+                        - generic [ref=e179]:
+                          - generic [ref=e180]: "Y"
+                          - generic [ref=e181]:
+                            - strong [ref=e182]: Your brand
+                            - generic [ref=e183]: Được tài trợ
+                        - generic "Display options" [ref=e184]
+                      - paragraph [ref=e189]:
+                        - strong [ref=e190]: "@yourbrand"
+                        - text: Một ý tưởng mới, một cách kể chuyện riêng. Khám phá bộ sưu tập mới của chúng tôi.
+                      - generic "Feed media preview" [ref=e191]:
+                        - generic [ref=e193]:
+                          - generic [ref=e198]: Ảnh / video · 4:5
+                          - generic [ref=e199]: Thêm media để xem bố cục
+                      - generic [ref=e200]:
+                        - generic [ref=e201]:
+                          - text: example.com
+                          - strong [ref=e202]: Khám phá điều mới
+                          - generic [ref=e203]: Khám phá sản phẩm và câu chuyện của thương hiệu.
+                        - generic [ref=e204]: Tìm hiểu thêm
+                      - generic [ref=e205]:
+                        - generic [ref=e206]:
+                          - generic [aria-hidden] [ref=e207]:
+                            - generic [ref=e208]: 👍
+                            - generic [ref=e209]: ❤️
+                            - generic [ref=e210]: 😮
+                          - text: 1.2K
+                        - generic [ref=e211]: 86 bình luận · 24 chia sẻ
+                      - generic [ref=e212]:
+                        - generic "Thích" [ref=e213]
+                        - generic "Bình luận" [ref=e216]
+                        - generic "Chia sẻ" [ref=e219]
+                      - generic [aria-hidden] [ref=e226]:
+                        - generic [ref=e227]: Trang chủ
+                        - generic [ref=e228]: Watch
+                        - generic [ref=e229]: Marketplace
+                        - generic [ref=e230]: Menu
+                - generic [aria-hidden]:
+                  - generic: 9:41
+              - generic [ref=e231]:
+                - strong [ref=e232]: 0 lỗi · 0 lưu ý · 4 chưa rõ
+                - generic [ref=e233]: Mô phỏng; không phải phê duyệt quảng cáo.
+            - generic [ref=e234]: Facebook / Feed
+          - generic [ref=e235]: Mô phỏng cơ bản. Không đảm bảo quảng cáo được duyệt.
+          - generic [ref=e239]:
+            - button "Xuất PNG" [ref=e240] [cursor=pointer]
+            - button "Gói review ZIP" [ref=e246] [cursor=pointer]
+            - generic [ref=e249]: ZIP gồm media, PNG và kết quả kiểm tra. Video xuất một khung hình.
+        - complementary "Kiểm tra creative" [ref=e250]:
+          - generic [ref=e251]:
+            - heading "03 Preflight" [level=2] [ref=e252]:
+              - generic [ref=e253]: "03"
+              - text: Preflight
+            - generic [ref=e254]: "7"
+          - generic [ref=e255]:
+            - generic [ref=e261]:
+              - strong [ref=e262]: Cần đối chiếu thông số
+              - generic [ref=e263]: Kết quả theo rule, không phải phê duyệt.
+            - generic [ref=e264]:
+              - generic [ref=e265]: 0 lỗi
+              - generic [ref=e267]: 0 lưu ý
+              - generic [ref=e269]: 4 chưa rõ
+          - generic [ref=e271]:
+            - generic [ref=e272]:
+              - 'button "Chưa xác minh Khả năng hỗ trợ bố cục cần đối chiếu trên nền tảng. Hiện tại: single_image · Yêu cầu: single_image / single_video / carousel / multi_image_grid Nguồn: Noti Ad Preview inventory · Tham khảo · 2026.10.12-mvp" [ref=e273] [cursor=pointer]':
+                - generic [ref=e278]:
+                  - text: Chưa xác minh
+                  - paragraph [ref=e279]: Khả năng hỗ trợ bố cục cần đối chiếu trên nền tảng.
+                  - generic [ref=e280]: "Hiện tại: single_image · Yêu cầu: single_image / single_video / carousel / multi_image_grid"
+                  - generic [ref=e281]: "Nguồn: Noti Ad Preview inventory · Tham khảo · 2026.10.12-mvp"
+              - button "Nguồn rule profile.composition.allowed:composition.kind" [ref=e282] [cursor=pointer]: Nguồn rule
+            - generic [ref=e286]:
+              - 'button "Chưa xác minh Số creative: tối thiểu 1. Chưa đủ bằng chứng để kết luận. Hiện tại: 0 · Yêu cầu: 1 Nguồn: Noti Ad Preview inventory · Tham khảo · 2026.10.12-mvp" [ref=e287] [cursor=pointer]':
+                - generic [ref=e292]:
+                  - text: Chưa xác minh
+                  - paragraph [ref=e293]: "Số creative: tối thiểu 1. Chưa đủ bằng chứng để kết luận."
+                  - generic [ref=e294]: "Hiện tại: 0 · Yêu cầu: 1"
+                  - generic [ref=e295]: "Nguồn: Noti Ad Preview inventory · Tham khảo · 2026.10.12-mvp"
+              - button "Nguồn rule assets.min_count_1:composition.assetIds" [ref=e296] [cursor=pointer]: Nguồn rule
+            - generic [ref=e300]:
+              - 'button "Chưa xác minh Số creative: tối đa 10. Chưa đủ bằng chứng để kết luận. Hiện tại: 0 · Yêu cầu: 10 Nguồn: Noti Ad Preview inventory · Tham khảo · 2026.10.12-mvp" [ref=e301] [cursor=pointer]':
+                - generic [ref=e306]:
+                  - text: Chưa xác minh
+                  - paragraph [ref=e307]: "Số creative: tối đa 10. Chưa đủ bằng chứng để kết luận."
+                  - generic [ref=e308]: "Hiện tại: 0 · Yêu cầu: 10"
+                  - generic [ref=e309]: "Nguồn: Noti Ad Preview inventory · Tham khảo · 2026.10.12-mvp"
+              - button "Nguồn rule assets.max_count_10:composition.assetIds" [ref=e310] [cursor=pointer]: Nguồn rule
+            - generic [ref=e314]:
+              - 'button "Chưa xác minh Mục tiêu, thị trường và điều kiện tài khoản chưa được xác minh cho target này. Hiện tại: Vietnam / unknown / unknown / not_connected · Yêu cầu: Đối chiếu điều kiện phân phối trong tài khoản nền tảng. Nguồn: Meta objective x placement x format · Chờ xác minh · 2026.10.12-mvp" [ref=e315] [cursor=pointer]':
+                - generic [ref=e320]:
+                  - text: Chưa xác minh
+                  - paragraph [ref=e321]: Mục tiêu, thị trường và điều kiện tài khoản chưa được xác minh cho target này.
+                  - generic [ref=e322]: "Hiện tại: Vietnam / unknown / unknown / not_connected · Yêu cầu: Đối chiếu điều kiện phân phối trong tài khoản nền tảng."
+                  - generic [ref=e323]: "Nguồn: Meta objective x placement x format · Chờ xác minh · 2026.10.12-mvp"
+              - button "Nguồn rule context.compatibility:context" [ref=e324] [cursor=pointer]: Nguồn rule
+          - button "Xem 3 kiểm tra đạt" [ref=e328] [cursor=pointer]
+          - paragraph [ref=e337]: Unknown không được tính là pass. Mỗi rule giữ nguồn và spec version.
+        - group [ref=e338]:
+          - generic [ref=e339]:
+            - generic [ref=e340]:
+              - heading "01 Nội dung creative" [level=2] [ref=e341]:
+                - generic [ref=e342]: "01"
+                - text: Nội dung creative
+              - generic [ref=e343]:
+                - button "Hoàn tác" [disabled] [ref=e344]
+                - button "Làm lại" [disabled] [ref=e348]
+            - generic [ref=e352]:
+              - button "Nội dung" [ref=e353] [cursor=pointer]
+              - button "Media" [ref=e357] [cursor=pointer]
+              - button "Copy riêng" [ref=e362] [cursor=pointer]
+            - generic [ref=e364]:
+              - generic [ref=e365]:
+                - generic [ref=e366]: Bố cục nội dung
+                - combobox "Bố cục nội dung" [ref=e367]:
+                  - option "Ảnh đơn" [selected]
+                  - option "Nhiều ảnh"
+                  - option "Video"
+                  - option "Carousel"
+                  - option "Text / RSA · cần kiểm tra"
+                  - option "Asset set · cần kiểm tra"
+                - generic [ref=e368]: Đổi vị trí giữ nguyên nội dung và asset.
+              - generic [ref=e369]:
+                - generic [ref=e370]:
+                  - generic [ref=e371]: Tên creative
+                  - generic [ref=e372]: "17"
+                - textbox "Tên creative" [ref=e373]: Creative đầu tiên
+              - generic [ref=e374]:
+                - generic [ref=e375]:
+                  - generic [ref=e376]: Tên thương hiệu
+                  - generic [ref=e377]: "10"
+                - textbox "Tên thương hiệu" [ref=e378]: Your brand
+              - generic [ref=e379]:
+                - generic [ref=e380]:
+                  - generic [ref=e381]: Tên tài khoản
+                  - generic [ref=e382]: "10"
+                - textbox "Tên tài khoản" [ref=e383]: "@yourbrand"
+              - generic [ref=e384]:
+                - generic [ref=e385]:
+                  - generic [ref=e386]: Văn bản chính
+                  - generic [ref=e387]: 81 / 2200
+                - textbox "Văn bản chính" [ref=e388]: Một ý tưởng mới, một cách kể chuyện riêng. Khám phá bộ sưu tập mới của chúng tôi.
+              - generic [ref=e389]:
+                - generic [ref=e390]:
+                  - generic [ref=e391]: Tiêu đề
+                  - generic [ref=e392]: 17 / 80
+                - textbox "Tiêu đề" [ref=e393]: Khám phá điều mới
+              - generic [ref=e394]:
+                - generic [ref=e395]:
+                  - generic [ref=e396]: Mô tả
+                  - generic [ref=e397]: "48"
+                - textbox "Mô tả" [ref=e398]: Khám phá sản phẩm và câu chuyện của thương hiệu.
+              - generic [ref=e399]:
+                - generic [ref=e400]: Nút CTA
+                - combobox "Nút CTA" [ref=e401]:
+                  - option "Tìm hiểu thêm" [selected]
+                  - option "Mua ngay"
+                  - option "Đăng ký"
+                  - option "Nhận tư vấn"
+                  - option "Gửi tin nhắn"
+                  - option "Liên hệ"
+                  - option "Không có CTA"
+              - generic [ref=e402]:
+                - generic [ref=e403]:
+                  - generic [ref=e404]: URL đích
+                  - generic [ref=e405]: "19"
+                - textbox "URL đích" [ref=e406]: https://example.com
+                - generic [ref=e407]: Chỉ hiển thị; không tự tải trang đích.
+              - generic [ref=e408]: Bộ đếm hiển thị dùng grapheme. Rule engine áp cách đếm riêng từng profile.
+      - generic [ref=e412]:
+        - generic [ref=e413]: Session-only · Không OAuth · Không ad API
+        - generic [ref=e415]: Editor · Compare · Preflight · Review export

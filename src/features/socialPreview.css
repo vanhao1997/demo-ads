@@ -1,0 +1,2329 @@
+.social-ad.social-native {
+  --color-muted: #65676b;
+  --color-accent: #0866ff;
+  --color-accent-soft: #e7f0ff;
+  container-type: inline-size;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: #ffffff;
+  color: #111311;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  font-size: 14px;
+}
+
+.social-native,
+.social-native * {
+  box-sizing: border-box;
+}
+
+.social-card,
+.instagram-post,
+.threads-thread,
+.zalo-card,
+.linkedin-card {
+  min-width: 0;
+}
+
+.social-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-width: 0;
+  padding: 12px;
+}
+
+.social-card-head > :first-child {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.social-kebab,
+.social-icon-text {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  color: currentColor;
+}
+
+.social-kebab {
+  color: #65676b;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.social-icon-text small {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.social-caption {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  padding: 0 12px 12px;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  font-size: 14px;
+  line-height: 1.45;
+  color: #050505;
+  overflow-wrap: anywhere;
+}
+
+.social-caption.expanded {
+  display: block;
+}
+
+.social-read-more {
+  display: inline;
+  border: 0;
+  background: transparent;
+  color: var(--color-muted, #65676b);
+  padding: 0 0 0 5px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.social-media-frame {
+  position: relative;
+  overflow: hidden;
+  background: #f0f2f5;
+}
+
+.social-media-frame > * {
+  width: 100%;
+  max-width: 100%;
+}
+
+.social-media-4x5 {
+  width: 100%;
+}
+
+.placeholder-ratio-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: rgba(15, 23, 42, 0.08);
+  color: #334155;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.social-native .ad-footer {
+  border-top: 1px solid #e4e6eb;
+  background: #f0f2f5;
+  padding: 10px 12px;
+}
+
+.social-card-head .ad-identity {
+  padding: 0;
+}
+
+.social-card-head .ad-identity > svg {
+  display: none;
+}
+
+.social-native .ad-footer > .ad-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #e4e6eb;
+  color: #050505;
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.social-instagram .ad-footer {
+  border: 0;
+  border-bottom: 1px solid #dbeafe;
+  background: #eff6ff;
+  padding: 10px 12px;
+}
+
+.social-instagram .ad-footer > .ad-cta {
+  background: transparent;
+  color: #0095f6;
+  padding: 0;
+  font-weight: 700;
+}
+
+.social-instagram .ad-footer > .ad-cta::after {
+  content: ' ›';
+  margin-left: 4px;
+  font-size: 15px;
+}
+
+.social-instagram .ad-footer > div {
+  font-size: 11px;
+}
+
+.social-instagram .ad-footer > div > span {
+  display: none;
+}
+
+.social-threads .ad-footer {
+  background: #f5f5f5;
+  border-top: 1px solid #e5e5e5;
+}
+
+.social-threads .ad-footer > .ad-cta {
+  background: #101010;
+  color: #ffffff;
+  border-radius: 999px;
+  font-size: 12px;
+  padding: 6px 14px;
+}
+
+.social-native .unsupported-composition {
+  display: block;
+  margin-top: 6px;
+}
+
+.facebook-appbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 48px;
+  background: #ffffff;
+  color: #0866ff;
+  padding: 0 12px;
+  border-bottom: 1px solid #e4e6eb;
+}
+
+.facebook-appbar-brand,
+.facebook-appbar-actions {
+  display: inline-flex;
+  align-items: center;
+}
+
+.facebook-appbar-brand > span {
+  font-size: 23px;
+  font-weight: 800;
+  letter-spacing: -0.8px;
+}
+
+.facebook-appbar-actions {
+  gap: 6px;
+}
+
+.facebook-app-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: #e4e6eb;
+  color: #050505;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.facebook-pill-chip {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #e4e6eb;
+  color: #050505;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.facebook-pill-chip.active {
+  background: #e7f3ff;
+  color: #0866ff;
+}
+
+.facebook-market-tabs,
+.facebook-search-tabs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid #e4e6eb;
+  background: #ffffff;
+  color: #65676b;
+  padding: 10px 12px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.facebook-market-tabs strong,
+.facebook-search-tabs strong {
+  color: #0866ff;
+  font-size: 14px;
+}
+
+.facebook-metrics,
+.zalo-metrics,
+.linkedin-metrics {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border-top: 1px solid #e4e6eb;
+  padding: 9px 12px;
+  color: #65676b;
+  font-size: 12px;
+}
+
+.facebook-reaction-dots {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 6px;
+}
+
+.facebook-reaction-dots i {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-right: -3px;
+  border: 1.5px solid #ffffff;
+  border-radius: 50%;
+}
+
+.facebook-reaction-dots .dot-like {
+  background: #0866ff;
+}
+
+.facebook-reaction-dots .dot-love {
+  background: #f33e58;
+}
+
+.facebook-action-row,
+.zalo-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid #ced0d4;
+  color: #65676b;
+}
+
+.facebook-action-row .social-icon-text,
+.zalo-actions .social-icon-text,
+.linkedin-actions .social-icon-text {
+  min-height: 40px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Facebook Marketplace 2-col grid (Noti.vn style) */
+.marketplace-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  padding: 8px;
+  background: #f0f2f5;
+}
+
+.marketplace-organic-item,
+.marketplace-card {
+  overflow: hidden;
+  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid #e4e6eb;
+}
+
+.marketplace-organic-thumb {
+  aspect-ratio: 1;
+  background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+}
+
+.marketplace-organic-thumb.alt {
+  background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+}
+
+.marketplace-organic-meta {
+  display: grid;
+  gap: 2px;
+  padding: 8px;
+}
+
+.marketplace-organic-meta strong {
+  font-size: 13px;
+  color: #050505;
+}
+
+.marketplace-organic-meta span {
+  font-size: 12px;
+  color: #050505;
+}
+
+.marketplace-organic-meta small {
+  font-size: 11px;
+  color: #65676b;
+}
+
+.marketplace-media,
+.right-column-media {
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: #eef1eb;
+}
+
+.marketplace-media > *,
+.right-column-media > * {
+  width: 100%;
+  height: 100%;
+}
+
+.marketplace-copy {
+  display: grid;
+  gap: 4px;
+  padding: 8px;
+}
+
+.marketplace-copy > span {
+  color: #65676b;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.marketplace-copy > strong {
+  font-size: 12px;
+  color: #050505;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.marketplace-copy > small {
+  font-size: 11px;
+  color: #65676b;
+}
+
+.marketplace-copy .ad-footer {
+  padding: 6px 0 0;
+  background: transparent;
+  border: 0;
+}
+
+.marketplace-copy .ad-footer > div {
+  display: none;
+}
+
+.marketplace-copy .ad-footer > .ad-cta {
+  width: 100%;
+  padding: 6px 8px;
+  font-size: 12px;
+}
+
+/* Facebook Search Results */
+.facebook-search-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #ffffff;
+  border-bottom: 1px solid #e4e6eb;
+}
+
+.facebook-back-arrow {
+  font-size: 16px;
+  color: #65676b;
+  font-weight: 700;
+}
+
+.facebook-query {
+  flex: 1;
+  border-radius: 999px;
+  background: #f0f2f5;
+  color: #050505;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.facebook-search-organic {
+  margin: 8px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid #e4e6eb;
+}
+
+.facebook-search-organic-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.organic-avatar {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #cbd5e1;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.facebook-search-organic-head strong {
+  display: block;
+  font-size: 12px;
+  color: #050505;
+}
+
+.facebook-search-organic-head small {
+  font-size: 10px;
+  color: #65676b;
+}
+
+.facebook-search-organic p {
+  margin: 0;
+  font-size: 12px;
+  color: #4b5563;
+  line-height: 1.4;
+}
+
+.search-result-card {
+  margin: 0 8px 8px;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid #e4e6eb;
+}
+
+/* Facebook Desktop Right Column (Noti.vn 3-column clone) */
+.fb-desktop-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 48px;
+  padding: 0 16px;
+  background: #ffffff;
+  border-bottom: 1px solid #dddfe2;
+}
+
+.fb-desktop-navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fb-circle-logo {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #0866ff;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.fb-desktop-search {
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: #f0f2f5;
+  color: #65676b;
+  font-size: 12px;
+}
+
+.fb-desktop-navbar-center {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #65676b;
+}
+
+.fb-desktop-navbar-center .active {
+  color: #0866ff;
+  border-bottom: 3px solid #0866ff;
+  padding: 13px 4px 10px;
+}
+
+.fb-desktop-navbar-right {
+  display: flex;
+  gap: 8px;
+}
+
+.fb-desktop-navbar-right span {
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: #e4e6eb;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.right-column-shell {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr) 280px;
+  gap: 16px;
+  background: #f0f2f5;
+  padding: 16px;
+  min-height: 460px;
+}
+
+.fb-desktop-left-rail {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  font-size: 13px;
+  color: #050505;
+}
+
+.fb-desktop-left-rail strong {
+  font-weight: 700;
+  color: #0866ff;
+}
+
+.right-column-page {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+}
+
+.fb-desktop-composer,
+.fb-desktop-organic-post {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.fb-desktop-composer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fb-desktop-composer-input {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #f0f2f5;
+  color: #65676b;
+  font-size: 13px;
+}
+
+.fb-desktop-organic-post p {
+  margin: 6px 0 10px;
+  font-size: 13px;
+  color: #050505;
+}
+
+.fb-desktop-organic-rect {
+  height: 150px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+}
+
+.right-column-ad {
+  align-self: start;
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.right-column-section-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #65676b;
+}
+
+.right-column-ad-item {
+  display: grid;
+  grid-template-columns: 100px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+}
+
+.right-column-ad-item .right-column-media {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+}
+
+.right-column-ad-copy {
+  display: grid;
+  gap: 4px;
+}
+
+.right-column-ad-copy strong {
+  font-size: 12px;
+  line-height: 1.3;
+  color: #050505;
+}
+
+.right-column-ad-copy small {
+  font-size: 11px;
+  color: #65676b;
+}
+
+.right-column-contacts {
+  display: grid;
+  gap: 6px;
+  padding-top: 8px;
+  border-top: 1px solid #e4e6eb;
+  font-size: 12px;
+  color: #050505;
+}
+
+.right-column-contacts span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.right-column-contacts i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #31a24c;
+}
+
+/* Audience Network */
+.audience-news-shell {
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.audience-news-shell header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  background: #1a1a2e;
+  color: #ffffff;
+  padding: 0 14px;
+  font-size: 12px;
+}
+
+.audience-news-shell article {
+  padding: 14px;
+}
+
+.audience-article-intro h4 {
+  margin: 0 0 6px;
+  font-size: 15px;
+  color: #111827;
+}
+
+.audience-article-intro p,
+.audience-article-outro {
+  margin: 0 0 12px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #4b5563;
+}
+
+.audience-article-outro {
+  margin: 12px 0 0;
+}
+
+.audience-ad-card {
+  overflow: hidden;
+  border: 1px solid #e4e6eb;
+  border-radius: 10px;
+}
+
+.audience-ad-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 12px;
+  background: #f8fafc;
+  color: #64748b;
+  font-size: 11px;
+}
+
+.audience-ad-dark-footer .ad-footer {
+  background: #1a1a2e;
+  color: #ffffff;
+  border-top: 0;
+}
+
+.audience-ad-dark-footer .ad-footer small,
+.audience-ad-dark-footer .ad-footer span {
+  color: #cbd5e1;
+}
+
+.audience-ad-dark-footer .ad-footer > .ad-cta {
+  background: #0866ff;
+  color: #ffffff;
+}
+
+/* Facebook In-Stream */
+.facebook-instream-shell,
+.youtube-watch-shell {
+  background: #ffffff;
+}
+
+.facebook-instream-host-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  background: #18191a;
+  color: #ffffff;
+}
+
+.facebook-instream-host-header strong {
+  display: block;
+  font-size: 13px;
+}
+
+.facebook-instream-host-header small {
+  font-size: 11px;
+  color: #b0b3b8;
+}
+
+.facebook-instream-player,
+.youtube-player {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #080808;
+}
+
+.facebook-instream-player > *,
+.youtube-player > * {
+  width: 100%;
+  height: 100%;
+}
+
+.facebook-instream-sponsored,
+.youtube-sponsored,
+.youtube-skip {
+  position: absolute;
+  z-index: 4;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.72);
+  color: #ffffff;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.facebook-instream-sponsored {
+  top: 10px;
+  left: 10px;
+  background: rgba(245, 158, 11, 0.92);
+  color: #111827;
+}
+
+.facebook-instream-continue {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  z-index: 4;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.65);
+  color: #ffffff;
+  padding: 4px 8px;
+  font-size: 10px;
+}
+
+.youtube-sponsored {
+  bottom: 12px;
+  left: 12px;
+}
+
+.youtube-skip {
+  right: 12px;
+  bottom: 12px;
+}
+
+/* Instagram */
+.instagram-appbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 46px;
+  border-bottom: 1px solid #efefef;
+  background: #ffffff;
+  padding: 0 12px;
+}
+
+.instagram-wordmark {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.instagram-app-icons,
+.instagram-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 18px;
+}
+
+.instagram-actions {
+  justify-content: space-between;
+  padding: 10px 12px 6px;
+}
+
+.instagram-actions > span {
+  display: inline-flex;
+  gap: 14px;
+}
+
+.instagram-likes {
+  display: block;
+  padding: 0 12px 4px;
+  font-size: 13px;
+}
+
+.instagram-comments {
+  display: block;
+  padding: 0 12px 12px;
+  color: #737373;
+  font-size: 12px;
+}
+
+/* Threads */
+.threads-appbar {
+  display: grid;
+  place-items: center;
+  min-height: 44px;
+  background: #ffffff;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.threads-composer-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-bottom: 1px solid #f0f0f0;
+  color: #999999;
+  font-size: 13px;
+}
+
+.threads-thread {
+  position: relative;
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  padding: 10px 12px 14px;
+}
+
+.threads-line {
+  position: absolute;
+  top: 56px;
+  bottom: 20px;
+  left: 28px;
+  width: 2px;
+  border-radius: 999px;
+  background: #e5e5e5;
+}
+
+.threads-avatar-slot {
+  position: relative;
+  z-index: 1;
+}
+
+.threads-avatar-slot .ad-identity {
+  display: block;
+}
+
+.threads-avatar-slot .ad-identity > div:not(.avatar),
+.threads-avatar-slot .ad-identity > svg {
+  display: none;
+}
+
+.threads-body {
+  min-width: 0;
+}
+
+.threads-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 28px;
+  font-size: 13px;
+}
+
+.threads-meta .threads-more {
+  margin-left: auto;
+  color: #777777;
+}
+
+.threads-meta span,
+.threads-body small {
+  color: #777777;
+}
+
+.threads-body .social-caption {
+  padding: 0 0 8px;
+}
+
+.threads-card-attachment {
+  overflow: hidden;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+}
+
+.threads-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 0 4px;
+  color: #303030;
+}
+
+/* Vertical Stories / Reels / TikTok */
+.social-vertical-stage {
+  position: relative;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  background: #050505;
+  color: #ffffff;
+}
+
+.social-vertical-media {
+  position: absolute;
+  inset: 0;
+}
+
+.social-vertical-media > * {
+  width: 100%;
+  max-width: 100%;
+}
+
+.social-tiktok,
+.social-vertical-meta,
+.social-zalo-video {
+  border: 0;
+  border-radius: 0;
+  background: #050505;
+}
+
+.tiktok-topbar,
+.meta-vertical-top,
+.zalo-video-topbar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 48px;
+  color: #ffffff;
+  padding: 0 12px;
+  font-size: 13px;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.55);
+}
+
+.meta-vertical-close {
+  margin-left: auto;
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.tiktok-topbar {
+  justify-content: center;
+}
+
+.tiktok-topbar strong {
+  border-bottom: 2px solid #ffffff;
+  padding-bottom: 4px;
+}
+
+.tiktok-topview-badges {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tiktok-topview-tag {
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(254, 44, 85, 0.9);
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.tiktok-topview-skip {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+  font-size: 11px;
+}
+
+.tiktok-rail,
+.meta-reels-rail {
+  position: absolute;
+  right: 10px;
+  bottom: 18%;
+  z-index: 5;
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  color: #ffffff;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.65);
+}
+
+.tiktok-rail .social-icon-text,
+.meta-reels-rail .social-icon-text {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  font-size: 16px;
+}
+
+.tiktok-disc {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 6px solid #262626;
+  background: radial-gradient(circle, #fe2c55 30%, #111 70%);
+}
+
+.tiktok-avatar .ad-identity {
+  display: block;
+}
+
+.tiktok-avatar .ad-identity > div:not(.avatar),
+.tiktok-avatar .ad-identity > svg {
+  display: none;
+}
+
+.tiktok-caption,
+.meta-vertical-caption {
+  position: absolute;
+  z-index: 5;
+  color: #ffffff;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.58);
+}
+
+.tiktok-caption {
+  right: 64px;
+  bottom: 16px;
+  left: 12px;
+}
+
+.meta-vertical-caption {
+  right: 60px;
+  bottom: 52px;
+  left: 12px;
+}
+
+.tiktok-caption p,
+.meta-vertical-caption p {
+  margin: 6px 0;
+  font-size: 13px;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+.tiktok-caption > small {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.22);
+  font-size: 10px;
+}
+
+.meta-story-progress {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  right: 10px;
+  z-index: 5;
+  display: flex;
+  gap: 4px;
+}
+
+.meta-story-progress > span {
+  height: 2px;
+  flex: 1;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.meta-story-progress > :first-child {
+  background: #ffffff;
+}
+
+.meta-stage.is-stories .meta-vertical-top {
+  top: 14px;
+}
+
+.meta-vertical-top .ad-identity {
+  padding: 0;
+  flex: 1;
+  font-size: 12px;
+}
+
+.meta-vertical-top .ad-identity small {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.meta-stage.is-stories .meta-vertical-caption > .ad-identity {
+  display: none;
+}
+
+.tiktok-caption .ad-footer:not(.carousel-footer) > div,
+.meta-vertical-caption .ad-footer:not(.carousel-footer) > div {
+  display: none;
+}
+
+.tiktok-caption .ad-footer,
+.meta-vertical-caption .ad-footer {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  margin-top: 8px;
+}
+
+.tiktok-caption .ad-footer > .ad-cta {
+  width: 100%;
+  background: #fe2c55;
+  color: #ffffff;
+  border-radius: 6px;
+  min-height: 34px;
+  font-weight: 700;
+}
+
+.meta-vertical-caption .ad-footer > .ad-cta {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  color: #111111;
+  border-radius: 999px;
+  min-height: 34px;
+  font-weight: 700;
+}
+
+.tiktok-music {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 6px;
+  font-size: 11px;
+  opacity: 0.9;
+}
+
+.tiktok-bottom-nav,
+.meta-reels-bottom-nav {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-items: center;
+  min-height: 48px;
+  background: #050505;
+  color: #ffffff;
+  font-size: 11px;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.tiktok-bottom-nav span:nth-child(3) {
+  justify-self: center;
+  width: 38px;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #050505;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.meta-vertical-reply {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  z-index: 5;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.85);
+  padding: 8px 14px;
+  font-size: 12px;
+}
+
+/* Banner on Reels (Noti.vn frosted overlay card) */
+.meta-ambient-reel {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 30% 22%, rgba(255, 255, 255, 0.16), transparent 22%),
+    linear-gradient(160deg, #1a1a2e 0%, #16213e 48%, #0f3460 100%);
+}
+
+.meta-ambient-creator-info {
+  position: absolute;
+  left: 12px;
+  right: 64px;
+  bottom: 92px;
+  display: grid;
+  gap: 3px;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 11px;
+}
+
+.meta-reels-banner-slot {
+  position: absolute;
+  right: 10px;
+  bottom: 14px;
+  left: 10px;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(12px);
+}
+
+.meta-reels-banner-thumb {
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.meta-reels-banner-thumb .ad-media {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 !important;
+}
+
+.meta-reels-banner-copy {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.meta-reels-banner-copy strong {
+  font-size: 11px;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.meta-reels-banner-copy small {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.meta-reels-banner-cta {
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: #0866ff;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.meta-reels-banner-dismiss {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.is-banner-on-reels .meta-vertical-caption {
+  display: none;
+}
+
+/* Zalo Ads Ecosystem */
+.social-zalo {
+  background: #f0f4f9;
+}
+
+.zalo-appbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 46px;
+  background: linear-gradient(90deg, #0068ff, #0084ff);
+  color: #ffffff;
+  padding: 0 12px;
+}
+
+.zalo-appbar span:last-child {
+  flex: 1;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.22);
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+.zalo-tabs {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-height: 38px;
+  background: #ffffff;
+  padding: 0 12px;
+  color: #64748b;
+  font-size: 13px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.zalo-tabs strong {
+  color: #0068ff;
+  border-bottom: 2px solid #0068ff;
+  padding: 8px 0;
+}
+
+.zalo-composer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  margin-bottom: 6px;
+  background: #ffffff;
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.zalo-composer-chips {
+  display: flex;
+  gap: 6px;
+}
+
+.zalo-composer-chips span {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 11px;
+}
+
+.zalo-oa-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: #fef3c7;
+  border: 1px solid #f59e0b;
+  color: #b45309;
+  font-size: 10px;
+  font-weight: 800;
+  font-style: normal;
+}
+
+.zalo-card {
+  margin: 8px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 40, 100, 0.06);
+}
+
+.social-zalo .ad-footer {
+  background: #f0f7ff;
+  border-top: 1px solid #dbeafe;
+}
+
+.social-zalo .ad-footer > .ad-cta {
+  background: #0068ff;
+  color: #ffffff;
+  border-radius: 6px;
+}
+
+.zalo-bottom-nav {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-items: center;
+  min-height: 44px;
+  background: #ffffff;
+  border-top: 1px solid #e2e8f0;
+  color: #64748b;
+  font-size: 11px;
+  text-align: center;
+}
+
+.zalo-bottom-nav strong {
+  color: #0068ff;
+}
+
+/* Zalo Message Ad */
+.zalo-chat-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: linear-gradient(90deg, #0068ff, #0084ff);
+  color: #ffffff;
+}
+
+.zalo-chat-oa-title {
+  flex: 1;
+  display: grid;
+}
+
+.zalo-chat-oa-title strong {
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.zalo-chat-oa-title small {
+  font-size: 10px;
+  opacity: 0.88;
+}
+
+.zalo-chat-body {
+  padding: 12px;
+  background: #e4ebf5;
+  display: grid;
+  gap: 10px;
+}
+
+.zalo-chat-sponsored-pill {
+  justify-self: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.08);
+  color: #475569;
+  font-size: 11px;
+}
+
+.zalo-chat-card {
+  overflow: hidden;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.08);
+}
+
+.zalo-chat-card-copy {
+  padding: 10px 12px;
+  display: grid;
+  gap: 4px;
+}
+
+.zalo-chat-card-copy strong {
+  font-size: 14px;
+  color: #0f172a;
+}
+
+.zalo-chat-card-copy p {
+  margin: 0;
+  font-size: 12px;
+  color: #334155;
+  line-height: 1.45;
+}
+
+.zalo-chat-card-copy small {
+  color: #64748b;
+  font-size: 11px;
+}
+
+.zalo-chat-buttons {
+  display: grid;
+  gap: 6px;
+  padding: 0 12px 12px;
+}
+
+.zalo-chat-buttons span {
+  text-align: center;
+  padding: 8px;
+  border-radius: 6px;
+  background: #f1f5f9;
+  color: #0068ff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.zalo-chat-buttons span.primary {
+  background: #0068ff;
+  color: #ffffff;
+}
+
+.zalo-chat-inputbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  background: #ffffff;
+  border-top: 1px solid #dbe2ea;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.zalo-chat-inputbar strong {
+  color: #0068ff;
+}
+
+/* Zalo Commerce & Article & Display */
+.zalo-commerce-details {
+  padding: 10px 12px 4px;
+  display: grid;
+  gap: 4px;
+}
+
+.zalo-commerce-tag {
+  font-size: 11px;
+  color: #0068ff;
+  font-weight: 700;
+}
+
+.zalo-commerce-price {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: #e11d48;
+}
+
+.zalo-article-header,
+.zalo-display-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: #0052cc;
+  color: #ffffff;
+  font-size: 12px;
+}
+
+.zalo-article-list {
+  padding: 10px;
+  display: grid;
+  gap: 10px;
+}
+
+.zalo-article-organic {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.zalo-article-organic strong {
+  display: block;
+  font-size: 13px;
+  color: #0f172a;
+}
+
+.zalo-article-organic small {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.zalo-article-thumb {
+  width: 68px;
+  height: 50px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #cbd5e1, #94a3b8);
+  flex-shrink: 0;
+}
+
+.zalo-article-sponsored-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  font-size: 11px;
+  color: #475569;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.zalo-article-sponsored-body {
+  padding: 10px 12px 0;
+}
+
+.zalo-display-publisher {
+  background: #f8fafc;
+}
+
+.zalo-display-slot-banner,
+.zalo-display-sidebar-slot {
+  margin: 10px;
+  overflow: hidden;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.zalo-display-slot-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  background: #eff6ff;
+  color: #1e40af;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.zalo-display-body {
+  padding: 12px;
+  display: grid;
+  gap: 14px;
+}
+
+.zalo-display-body.has-sidebar {
+  grid-template-columns: minmax(0, 1fr) 300px;
+  align-items: start;
+}
+
+.zalo-display-editorial h4 {
+  margin: 0 0 6px;
+  font-size: 16px;
+  color: #0f172a;
+}
+
+.zalo-display-editorial p {
+  margin: 0 0 10px;
+  font-size: 13px;
+  color: #475569;
+  line-height: 1.5;
+}
+
+.zalo-display-skeleton {
+  height: 90px;
+  border-radius: 8px;
+  background: #e2e8f0;
+  margin-bottom: 8px;
+}
+
+.zalo-display-skeleton.short {
+  height: 44px;
+  width: 75%;
+}
+
+/* LinkedIn Ads Ecosystem */
+.social-linkedin {
+  background: #f3f2ef;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.linkedin-in-badge {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  background: #0a66c2;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.linkedin-search-pill {
+  flex: 1;
+  max-width: 260px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  background: #edf3f8;
+  color: #5e6d77;
+  font-size: 12px;
+}
+
+.linkedin-mobile-appbar,
+.linkedin-desktop-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 14px;
+  background: #ffffff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.linkedin-nav-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.linkedin-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.linkedin-nav-links .active {
+  color: rgba(0, 0, 0, 0.9);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.9);
+  padding: 14px 0 12px;
+}
+
+.linkedin-card {
+  margin: 8px;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.linkedin-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px;
+}
+
+.linkedin-identity-wrap .ad-identity {
+  padding: 0;
+}
+
+.linkedin-identity-wrap .ad-identity > svg,
+.linkedin-identity-wrap .ad-identity small {
+  display: none;
+}
+
+.linkedin-identity-wrap .avatar {
+  border-radius: 6px;
+}
+
+.linkedin-followers {
+  display: block;
+  margin-top: 2px;
+  padding-left: 46px;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 11px;
+}
+
+.linkedin-follow-btn {
+  color: #0a66c2;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.social-linkedin .ad-footer {
+  background: #f3f6f8;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.social-linkedin .ad-footer > .ad-cta {
+  background: transparent;
+  border: 1.5px solid #0a66c2;
+  color: #0a66c2;
+  border-radius: 999px;
+  font-weight: 700;
+  padding: 5px 14px;
+}
+
+.linkedin-actions {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.linkedin-mobile-bottom-nav {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-items: center;
+  min-height: 44px;
+  background: #ffffff;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 11px;
+  text-align: center;
+}
+
+.linkedin-mobile-bottom-nav strong {
+  color: rgba(0, 0, 0, 0.9);
+}
+
+/* LinkedIn Desktop 3-column layout */
+.linkedin-desktop-grid {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr) 260px;
+  gap: 16px;
+  padding: 16px;
+  align-items: start;
+}
+
+.linkedin-desktop-grid.right-rail-focus {
+  grid-template-columns: minmax(0, 1fr) 300px;
+}
+
+.linkedin-left-profile,
+.linkedin-right-news,
+.linkedin-composer-box,
+.linkedin-organic-post,
+.linkedin-spotlight-card,
+.linkedin-text-ad-card {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.linkedin-left-profile {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: 4px;
+}
+
+.linkedin-profile-banner {
+  width: 100%;
+  height: 42px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #0a66c2, #004182);
+  margin-bottom: -20px;
+}
+
+.linkedin-member-circle {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  background: #0a66c2;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.linkedin-left-profile small {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.linkedin-profile-stats {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 8px;
+  margin-top: 6px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  font-size: 11px;
+}
+
+.linkedin-profile-stats strong {
+  color: #0a66c2;
+}
+
+.linkedin-center-feed {
+  display: grid;
+  gap: 10px;
+}
+
+.linkedin-center-feed .linkedin-card {
+  margin: 0;
+}
+
+.linkedin-composer-box {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.linkedin-right-news {
+  display: grid;
+  gap: 8px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.linkedin-right-news strong {
+  color: rgba(0, 0, 0, 0.9);
+  font-size: 13px;
+}
+
+/* LinkedIn Message Ad */
+.linkedin-messaging-shell {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr) 280px;
+  gap: 12px;
+  padding: 14px;
+  align-items: start;
+}
+
+.linkedin-inbox-list,
+.linkedin-message-thread,
+.linkedin-message-companion {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.linkedin-inbox-head {
+  padding: 10px 12px;
+  font-weight: 700;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.linkedin-inbox-item {
+  display: flex;
+  gap: 10px;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.linkedin-inbox-item.active {
+  background: #edf3f8;
+  border-left: 3px solid #0a66c2;
+}
+
+.linkedin-company-avatar {
+  display: inline-grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  background: #0a66c2;
+  color: #ffffff;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.linkedin-company-avatar.muted {
+  background: #64748b;
+}
+
+.linkedin-inbox-item strong {
+  display: block;
+  font-size: 12px;
+}
+
+.linkedin-inbox-item small {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.6);
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.linkedin-message-thread-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.linkedin-message-thread-head strong {
+  display: block;
+  font-size: 14px;
+}
+
+.linkedin-message-thread-head small {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.linkedin-message-body {
+  padding: 14px;
+  display: grid;
+  gap: 8px;
+}
+
+.linkedin-message-subject {
+  font-size: 15px;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.linkedin-message-greeting,
+.linkedin-message-text,
+.linkedin-message-desc {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.linkedin-solid-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 16px;
+  border-radius: 999px;
+  background: #0a66c2;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.linkedin-message-companion {
+  padding: 10px;
+  display: grid;
+  gap: 6px;
+  text-align: center;
+}
+
+.linkedin-message-companion small {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.linkedin-companion-media {
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+/* LinkedIn Right Rail Spotlight + Text Ad */
+.linkedin-right-rail-column {
+  display: grid;
+  gap: 12px;
+}
+
+.linkedin-spotlight-card {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: 8px;
+}
+
+.linkedin-spotlight-top {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.linkedin-spotlight-sub {
+  margin: 0;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.linkedin-spotlight-avatars {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.linkedin-spotlight-media {
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.linkedin-spotlight-media .ad-media {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 !important;
+}
+
+.linkedin-spotlight-copy {
+  margin: 0;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.75);
+  line-height: 1.4;
+}
+
+.linkedin-outline-cta {
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: 1.5px solid #0a66c2;
+  color: #0a66c2;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.linkedin-text-ad-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.linkedin-text-ad-row strong {
+  display: block;
+  font-size: 12px;
+  color: #0a66c2;
+}
+
+.linkedin-text-ad-row p {
+  margin: 2px 0;
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.linkedin-text-ad-row small {
+  font-size: 10px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.linkedin-desktop-main-placeholder {
+  display: grid;
+  gap: 12px;
+}
+
+.linkedin-organic-post strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.linkedin-organic-post p {
+  margin: 0 0 10px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.linkedin-organic-skeleton {
+  height: 140px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+}
+
+/* App chrome toggle rules */
+.social-native[data-app-chrome='false'] .facebook-appbar,
+.social-native[data-app-chrome='false'] .facebook-market-tabs,
+.social-native[data-app-chrome='false'] .facebook-search-header,
+.social-native[data-app-chrome='false'] .facebook-search-tabs,
+.social-native[data-app-chrome='false'] .facebook-search-organic,
+.social-native[data-app-chrome='false'] .facebook-metrics,
+.social-native[data-app-chrome='false'] .facebook-action-row,
+.social-native[data-app-chrome='false'] .fb-desktop-navbar,
+.social-native[data-app-chrome='false'] .fb-desktop-left-rail,
+.social-native[data-app-chrome='false'] .right-column-page,
+.social-native[data-app-chrome='false'] .right-column-contacts,
+.social-native[data-app-chrome='false'] .marketplace-organic-item,
+.social-native[data-app-chrome='false'] .instagram-appbar,
+.social-native[data-app-chrome='false'] .instagram-actions,
+.social-native[data-app-chrome='false'] .instagram-likes,
+.social-native[data-app-chrome='false'] .instagram-comments,
+.social-native[data-app-chrome='false'] .threads-appbar,
+.social-native[data-app-chrome='false'] .threads-composer-bar,
+.social-native[data-app-chrome='false'] .threads-line,
+.social-native[data-app-chrome='false'] .threads-avatar-slot,
+.social-native[data-app-chrome='false'] .threads-meta,
+.social-native[data-app-chrome='false'] .threads-actions,
+.social-native[data-app-chrome='false'] .threads-body > small,
+.social-native[data-app-chrome='false'] .zalo-appbar,
+.social-native[data-app-chrome='false'] .zalo-tabs,
+.social-native[data-app-chrome='false'] .zalo-composer,
+.social-native[data-app-chrome='false'] .zalo-metrics,
+.social-native[data-app-chrome='false'] .zalo-actions,
+.social-native[data-app-chrome='false'] .zalo-bottom-nav,
+.social-native[data-app-chrome='false'] .linkedin-mobile-appbar,
+.social-native[data-app-chrome='false'] .linkedin-mobile-bottom-nav,
+.social-native[data-app-chrome='false'] .linkedin-desktop-nav,
+.social-native[data-app-chrome='false'] .linkedin-left-profile,
+.social-native[data-app-chrome='false'] .linkedin-right-news,
+.social-native[data-app-chrome='false'] .linkedin-composer-box,
+.social-native[data-app-chrome='false'] .linkedin-metrics,
+.social-native[data-app-chrome='false'] .linkedin-actions,
+.social-native[data-app-chrome='false'] .tiktok-topbar,
+.social-native[data-app-chrome='false'] .tiktok-rail,
+.social-native[data-app-chrome='false'] .tiktok-bottom-nav,
+.social-native[data-app-chrome='false'] .meta-reels-rail,
+.social-native[data-app-chrome='false'] .meta-reels-bottom-nav,
+.social-native[data-app-chrome='false'] .zalo-video-topbar,
+.social-native[data-app-chrome='false'] .meta-vertical-top,
+.social-native[data-app-chrome='false'] .meta-vertical-reply,
+.social-native[data-app-chrome='false'] .meta-story-progress,
+.social-native[data-app-chrome='false'] .audience-news-shell header,
+.social-native[data-app-chrome='false'] .audience-article-intro,
+.social-native[data-app-chrome='false'] .audience-article-outro,
+.social-native[data-app-chrome='false'] .youtube-watch-meta,
+.social-native[data-app-chrome='false'] .youtube-actions,
+.social-native[data-app-chrome='false'] .youtube-sponsored,
+.social-native[data-app-chrome='false'] .youtube-skip,
+.social-native[data-app-chrome='false'] .facebook-instream-sponsored,
+.context-shorts-shell[data-app-chrome='false'] .context-shorts-rail {
+  display: none !important;
+}
+
+.social-tiktok[data-topview-phase='intro'] .tiktok-topbar,
+.social-tiktok[data-topview-phase='intro'] .tiktok-rail,
+.social-tiktok[data-topview-phase='intro'] .tiktok-caption,
+.social-tiktok[data-topview-phase='intro'] .tiktok-bottom-nav {
+  display: none;
+}
+
+.social-native[data-app-chrome='false'] .threads-thread,
+.social-native[data-app-chrome='false'] .right-column-shell,
+.social-native[data-app-chrome='false'] .linkedin-desktop-grid {
+  grid-template-columns: minmax(0, 1fr);
+  padding: 0;
+}
+
+.youtube-watch-shell {
+  color: #0f0f0f;
+}
+
+.youtube-watch-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px;
+}
+
+.youtube-watch-meta > div {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.youtube-watch-meta span {
+  color: #606060;
+  font-size: 12px;
+}
+
+.youtube-subscribe {
+  border-radius: 999px;
+  background: #0f0f0f;
+  color: #ffffff !important;
+  padding: 8px 14px;
+  font-weight: 700;
+}
+
+.youtube-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0 12px 12px;
+}
+
+.youtube-actions .social-icon-text {
+  border-radius: 999px;
+  background: #f2f2f2;
+  padding: 8px 11px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+@container (max-width: 520px) {
+  .right-column-shell,
+  .linkedin-desktop-grid,
+  .linkedin-messaging-shell,
+  .zalo-display-body.has-sidebar {
+    grid-template-columns: 1fr;
+  }
+}

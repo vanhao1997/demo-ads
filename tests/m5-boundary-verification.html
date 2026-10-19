@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Milestone 5 Empirical Adversarial Verification Suite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-subtle: #f6f6f7;
+      --surface: #ffffff;
+      --text: #101113;
+      --text-muted: #5f6470;
+      --border: #e7e7ea;
+      --brand: #ed3c47;
+      --brand-600: #d62e3a;
+      --brand-050: #fdedef;
+    }
+    body { font-family: 'Inter', sans-serif; background: #fafafa; color: var(--text); }
+    code, pre { font-family: 'JetBrains Mono', monospace; }
+  </style>
+</head>
+<body class="p-6 text-sm">
+  <div class="max-w-6xl mx-auto space-y-6">
+    <header class="border-b border-[#e7e7ea] pb-4 flex items-center justify-between">
+      <div>
+        <h1 class="text-xl font-bold text-[#101113]">Milestone 5 Empirical Verification & Adversarial Challenge</h1>
+        <p class="text-xs text-[#5f6470] mt-1">Challenger m5_2 • Dedicated ZoomModal, Native Chrome, TikTok TopView, CJK Weighting & Iconography</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <span id="badgeVerdict" class="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800">Đang chạy...</span>
+        <button id="btnRerun" class="px-4 py-1.5 rounded-lg bg-[#ed3c47] text-white font-semibold text-xs shadow-sm hover:bg-[#d62e3a]">Chạy Lại Toàn Bộ</button>
+      </div>
+    </header>
+
+    <!-- Metrics Cards -->
+    <div class="grid grid-cols-4 gap-4">
+      <div class="bg-white p-4 rounded-xl border border-[#e7e7ea] shadow-sm">
+        <div class="text-xs text-[#5f6470]">Tổng số bài test</div>
+        <div id="statTotal" class="text-2xl font-bold mt-1 text-[#101113]">0</div>
+      </div>
+      <div class="bg-white p-4 rounded-xl border border-[#e7e7ea] shadow-sm">
+        <div class="text-xs text-[#16a34a]">Đạt (Passed)</div>
+        <div id="statPassed" class="text-2xl font-bold mt-1 text-[#16a34a]">0</div>
+      </div>
+      <div class="bg-white p-4 rounded-xl border border-[#e7e7ea] shadow-sm">
+        <div class="text-xs text-[#e8590c]">Thất bại (Failed)</div>
+        <div id="statFailed" class="text-2xl font-bold mt-1 text-[#e8590c]">0</div>
+      </div>
+      <div class="bg-white p-4 rounded-xl border border-[#e7e7ea] shadow-sm">
+        <div class="text-xs text-[#5f6470]">Thời gian chạy</div>
+        <div id="statTime" class="text-2xl font-bold mt-1 text-[#101113]">0 ms</div>
+      </div>
+    </div>
+
+    <!-- Live Target Iframe (Sandbox) -->
+    <div class="bg-white p-4 rounded-xl border border-[#e7e7ea] shadow-sm">
+      <h2 class="text-xs font-semibold text-[#5f6470] uppercase tracking-wider mb-2">Live Target Iframe Sandbox (demo-app.html)</h2>
+      <div class="h-[380px] w-full rounded-lg border border-[#e7e7ea] overflow-hidden bg-[#f6f6f7]">
+        <iframe id="targetFrame" class="w-full h-full border-0" src="../demo-app.html"></iframe>
+      </div>
+    </div>
+
+    <!-- Detailed Results Table -->
+    <div class="bg-white rounded-xl border border-[#e7e7ea] shadow-sm overflow-hidden">
+      <div class="px-4 py-3 bg-[#f6f6f7] border-b border-[#e7e7ea] font-semibold text-xs text-[#101113] flex justify-between">
+        <span>Chi Tiết Kết Quả Kiểm Thử Biên M5 (Empirical Challenge Assertions)</span>
+        <span id="statSub" class="text-[#5f6470]">5 Nhóm Kiểm Thử</span>
+      </div>
+      <div id="testRows" class="divide-y divide-[#e7e7ea] font-mono text-xs"></div>
+    </div>
+  </div>
+
+  <script>
+    const tests = [];
+    function test(id, group, name, fn) {
+      tests.push({ id, group, name, fn });
+    }
+
+    // Mathematical counting oracle for CJK characters
+    function countGoogleCharacters(str) {
+      if (!str) return 0;
+      let count = 0;
+      for (const ch of str) {
+        const cp = ch.codePointAt(0);
+        const isCJK =
+          (cp >= 4352 && cp <= 4447) ||
+          (cp >= 11904 && cp <= 42191) ||
+          (cp >= 44032 && cp <= 55203) ||
+          (cp >= 63744 && cp <= 64255) ||
+          (cp >= 65072 && cp <= 65103) ||
+          (cp >= 65280 && cp <= 65374);
+        count += isCJK ? 2 : 1;
+      }
+      return count;
+    }
+
+    // =========================================================================
+    // Area 1: Dedicated ZoomModal Stress Verification
+    // =========================================================================
+    test('M5.1.1', 'ZoomModal', 'Clicking "Phóng to" opens dedicated ZoomModal and does NOT toggle showAll or trigger grid', (doc) => {
+      const zoomBtn = Array.from(doc.querySelectorAll('button')).find(
+        (b) => b.textContent.includes('Phóng to') || b.getAttribute('aria-label') === 'Phóng to'
+      );
+      if (!zoomBtn) throw new Error('Zoom button "Phóng to" not found in DOM');
+      zoomBtn.click();
+
+      const modal = doc.querySelector('.zoom-modal-backdrop');
+      if (!modal) throw new Error('Dedicated modal (.zoom-modal-backdrop) was not mounted');
+      if (modal.getAttribute('role') !== 'dialog') throw new Error('Modal missing role="dialog"');
+      if (modal.getAttribute('aria-modal') !== 'true') throw new Error('Modal missing aria-modal="true"');
+
+      // Grid check: 2-column comparative grid must NOT be rendered
+      const grid = doc.querySelectorAll('.grid-cols-2 .device-frame');
+      if (grid.length > 0) throw new Error('Comparative grid unexpectedly triggered');
+
+      const closeBtn = doc.querySelector('.close-zoom-btn');
+      if (closeBtn) closeBtn.click();
+    });
+
+    test('M5.1.2', 'ZoomModal', 'Clicking .zoom-modal-backdrop (outside modal container) closes the modal', (doc) => {
+      const zoomBtn = Array.from(doc.querySelectorAll('button')).find(
+        (b) => b.textContent.includes('Phóng to') || b.getAttribute('aria-label') === 'Phóng to'
+      );
+      if (!zoomBtn) throw new Error('Zoom button not found');
+      zoomBtn.click();
+
+      const modal = doc.querySelector('.zoom-modal-backdrop');
+      if (!modal) throw new Error('Modal backdrop not found');
+
+      // Click on backdrop itself (e.target === e.currentTarget)
+      modal.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+
+      const closedModal = doc.querySelector('.zoom-modal-backdrop');
+      if (closedModal) throw new Error('Modal did not close on backdrop click');
+    });
+
+    test('M5.1.3', 'ZoomModal', 'Clicking inside .zoom-modal-content does NOT close the modal', (doc) => {
+      const zoomBtn = Array.from(doc.querySelectorAll('button')).find(
+        (b) => b.textContent.includes('Phóng to') || b.getAttribute('aria-label') === 'Phóng to'
+      );
+      if (!zoomBtn) throw new Error('Zoom button not found');
+      zoomBtn.click();
+
+      const content = doc.querySelector('.zoom-modal-content');
+      if (!content) throw new Error('Modal content container not found');
+
+      content.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+
+      const modal = doc.querySelector('.zoom-modal-backdrop');
+      if (!modal) throw new Error('Modal closed unexpectedly when clicking inside modal content');
+
+      const closeBtn = doc.querySelector('.close-zoom-btn');
+      if (closeBtn) closeBtn.click();
+    });
+
+    test('M5.1.4', 'ZoomModal', 'Clicking .close-zoom-btn (✕) closes the modal cleanly', (doc) => {
+      const zoomBtn = Array.from(doc.querySelectorAll('button')).find(
+        (b) => b.textContent.includes('Phóng to') || b.getAttribute('aria-label') === 'Phóng to'
+      );
+      if (!zoomBtn) throw new Error('Zoom button not found');
+      zoomBtn.click();
+
+      const closeBtn = doc.querySelector('.close-zoom-btn');
+      if (!closeBtn) throw new Error('Close button not found');
+      if (!closeBtn.textContent.includes('✕')) throw new Error('Close button missing ✕ glyph');
+
+      closeBtn.click();
+      const modal = doc.querySelector('.zoom-modal-backdrop');
+      if (modal) throw new Error('Modal did not close when clicking close button');
+    });
+
+    test('M5.1.5', 'ZoomModal', 'Pressing Escape key closes the modal cleanly', (doc) => {
+      const zoomBtn = Array.from(doc.querySelectorAll('button')).find(
+        (b) => b.textContent.includes('Phóng to') || b.getAttribute('aria-label') === 'Phóng to'
+      );
+      if (!zoomBtn) throw new Error('Zoom button not found');
+      zoomBtn.focus();
+      zoomBtn.click();
+
+      const modal = doc.querySelector('.zoom-modal-backdrop');
+      if (!modal) throw new Error('Modal not open');
+
+      const win = doc.defaultView || window;
+      const escEvent = new KeyboardEvent('keydown', {
+        key: 'Escape',
+        code: 'Escape',
+        keyCode: 27,
+        bubbles: true,
+        cancelable: true,
+      });
+      win.dispatchEvent(escEvent);
+
+      const closedModal = doc.querySelector('.zoom-modal-backdrop');
+      if (closedModal) throw new Error('Modal did not close upon Escape key event');
+    });
+
+    test('M5.1.6', 'ZoomModal', 'Opening and closing ZoomModal does NOT mutate or reset draft state', (doc) => {
+      const brandInput = doc.querySelector('input[type="text"]');
+      if (!brandInput) throw new Error('Brand input not found');
+
+      const originalVal = brandInput.value;
+      const testVal = 'Empirical_Zoom_Isolation_Test';
+      brandInput.value = testVal;
+      brandInput.dispatchEvent(new Event('input', { bubbles: true }));
+
+      const zoomBtn = Array.from(doc.querySelectorAll('button')).find(
+        (b) => b.textContent.includes('Phóng to') || b.getAttribute('aria-label') === 'Phóng to'
+      );
+      if (zoomBtn) {
+        zoomBtn.click();
+        const closeBtn = doc.querySelector('.close-zoom-btn');
+        if (closeBtn) closeBtn.click();
+
+        if (brandInput.value !== testVal) {
+          throw new Error(`Draft state mutated: expected "${testVal}", got "${brandInput.value}"`);
+        }
+
+        // Restore
+        brandInput.value = originalVal;
+        brandInput.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+    });
+
+    // =========================================================================
+    // Area 2: Native App UI Toggling Stress Verification
+    // =========================================================================
+    test('M5.2.1', 'Native Chrome', 'When showAppUi is true, status bar and home indicator exist in DOM', (doc) => {
+      const tiktokTab = doc.querySelector('[data-testid="platform-tab-tiktok"]');
+      if (tiktokTab) tiktokTab.click();
+
+      const statusEl = doc.querySelector('.device-phone-status');
+      const homeEl = doc.querySelector('.device-home-indicator');
+
+      if (!statusEl) throw new Error('Expected .device-phone-status to exist when showAppUi is true');
+      if (!statusEl.textContent.includes('9:41')) throw new Error('Expected status bar to contain 9:41');
+      if (!homeEl) throw new Error('Expected .device-home-indicator to exist when showAppUi is true');
+    });
+
+    test('M5.2.2', 'Native Chrome', 'When showAppUi is false, status bar and home indicator are completely unmounted', (doc) => {
+      const tiktokTab = doc.querySelector('[data-testid="platform-tab-tiktok"]');
+      if (tiktokTab) tiktokTab.click();
+
+      const appUiBtn = Array.from(doc.querySelectorAll('button')).find((b) =>
+        b.textContent.includes('Giao diện app')
+      );
+      if (!appUiBtn) throw new Error('"Giao diện app" button not found');
+
+      // Toggle off
+      appUiBtn.click();
+
+      const statusEl = doc.querySelector('.device-phone-status');
+      const homeEl = doc.querySelector('.device-home-indicator');
+
+      if (statusEl !== null) throw new Error('Expected .device-phone-status to be unmounted, but still in DOM');
+      if (homeEl !== null) throw new Error('Expected .device-home-indicator to be unmounted, but still in DOM');
+
+      // Reset
+      appUiBtn.click();
+    });
+
+    test('M5.2.3', 'Native Chrome', 'Vertical video reaction rails and bottom bars are unmounted when showAppUi is false', (doc) => {
+      const tiktokTab = doc.querySelector('[data-testid="platform-tab-tiktok"]');
+      if (tiktokTab) tiktokTab.click();
+
+      const infeedPill = doc.querySelector('[data-testid="placement-pill-tt_infeed"]');
+      if (infeedPill) infeedPill.click();
+
+      const appUiBtn = Array.from(doc.querySelectorAll('button')).find((b) =>
+        b.textContent.includes('Giao diện app')
+      );
+      if (!appUiBtn) throw new Error('"Giao diện app" button not found');
+
+      // Turn off
+      appUiBtn.click();
+
+      const phoneFrame = doc.querySelector('.device-frame');
+      if (phoneFrame) {
+        if (phoneFrame.textContent.includes('12,3K')) {
+          throw new Error('Reaction rail count (12,3K) still rendered when showAppUi is false');
+        }
+        if (phoneFrame.textContent.includes('Trang chủ')) {
+          throw new Error('Bottom navigation bar still rendered when showAppUi is false');
+        }
+      }
+
+      // Reset
+      appUiBtn.click();
+    });
+
+    // =========================================================================
+    // Area 3: TikTok TopView Phase Switching
+    // =========================================================================
+    test('M5.3.1', 'TikTok TopView', 'Viewing tiktok.topview renders segmented controls ("0-3 giây đầu" & "Sau 3 giây")', (doc) => {
+      const tiktokTab = doc.querySelector('[data-testid="platform-tab-tiktok"]');
+      if (tiktokTab) tiktokTab.click();
+
+      const topviewPill = doc.querySelector('[data-testid="placement-pill-tt_topview"]');
+      if (topviewPill) topviewPill.click();
+
+      const introBtn = Array.from(doc.querySelectorAll('button')).find((b) =>
+        b.textContent.includes('0-3 giây đầu')
+      );
+      const lateBtn = Array.from(doc.querySelectorAll('button')).find((b) =>
+        b.textContent.includes('Sau 3 giây')
+      );
+
+      if (!introBtn) throw new Error('"0-3 giây đầu" phase button not found');
+      if (!lateBtn) throw new Error('"Sau 3 giây" phase button not found');
+    });
+
+    test('M5.3.2', 'TikTok TopView', 'Intro mode ("0-3 giây đầu") suppresses overlay and displays "Bỏ qua" skip button', (doc) => {
+      const introBtn = Array.from(doc.querySelectorAll('button')).find((b) =>
+        b.textContent.includes('0-3 giây đầu')
+      );
+      if (!introBtn) throw new Error('"0-3 giây đầu" button not found');
+      introBtn.click();
+
+      const phoneFrame = doc.querySelector('.device-frame');
+      if (!phoneFrame) throw new Error('Phone frame not found');
+
+      if (!phoneFrame.textContent.includes('Bỏ qua') && !phoneFrame.textContent.includes('Skip')) {
+        throw new Error('Skip button ("Bỏ qua") not rendered in TopView intro mode');
+      }
+      if (phoneFrame.textContent.includes('12,3K')) {
+        throw new Error('Reaction rail unexpectedly rendered in TopView intro mode');
+      }
+      if (phoneFrame.textContent.includes('Trang chủ')) {
+        throw new Error('Bottom nav unexpectedly rendered in TopView intro mode');
+      }
+    });
+
+    test('M5.3.3', 'TikTok TopView', 'Post-3s mode ("Sau 3 giây") renders in-feed overlays and suppresses "Bỏ qua" skip button', (doc) => {
+      const lateBtn = Array.from(doc.querySelectorAll('button')).find((b) =>
+        b.textContent.includes('Sau 3 giây')
+      );
+      if (!lateBtn) throw new Error('"Sau 3 giây" button not found');
+      lateBtn.click();
+
+      const phoneFrame = doc.querySelector('.device-frame');
+      if (!phoneFrame) throw new Error('Phone frame not found');
+
+      if (phoneFrame.textContent.includes('Bỏ qua')) {
+        throw new Error('Skip button ("Bỏ qua") should be removed after 3s');
+      }
+      if (!phoneFrame.textContent.includes('12,3K')) {
+        throw new Error('Reaction rail (12,3K) should be visible after 3s');
+      }
+      if (!phoneFrame.textContent.includes('Trang chủ')) {
+        throw new Error('Bottom navigation bar should be visible after 3s');
+      }
+    });
+
+    // =========================================================================
+    // Area 4: Live Validation & CJK Double-Width Weighting
+    // =========================================================================
+    test('M5.4.1', 'Validation & CJK', 'Pure ASCII strings count exactly 1 unit per character', () => {
+      if (countGoogleCharacters('Hello World') !== 11) throw new Error('ASCII mismatch');
+      if (countGoogleCharacters('Google Ads 2026') !== 15) throw new Error('ASCII mismatch');
+    });
+
+    test('M5.4.2', 'Validation & CJK', 'Vietnamese accented characters count 1 unit each', () => {
+      const vn = 'Thời trang mùa hè khuyến mãi';
+      if (countGoogleCharacters(vn) !== vn.length) {
+        throw new Error(`Vietnamese count mismatch: expected ${vn.length}, got ${countGoogleCharacters(vn)}`);
+      }
+    });
+
+    test('M5.4.3', 'Validation & CJK', 'CJK ideographs, Kana, and Hangul count as 2 units each', () => {
+      if (countGoogleCharacters('広告') !== 4) throw new Error('Kanji mismatch');
+      if (countGoogleCharacters('とうきょう') !== 10) throw new Error('Hiragana mismatch');
+      if (countGoogleCharacters('テスト') !== 6) throw new Error('Katakana mismatch');
+      if (countGoogleCharacters('광고') !== 4) throw new Error('Hangul mismatch');
+      if (countGoogleCharacters('测试') !== 4) throw new Error('Simplified Chinese mismatch');
+    });
+
+    test('M5.4.4', 'Validation & CJK', 'Mixed Latin and CJK strings calculate combined units accurately', () => {
+      // 9 Latin (9) + 5 CJK (10) = 19
+      const mixed = 'Sale 50% 限定セール';
+      if (countGoogleCharacters(mixed) !== 19) {
+        throw new Error(`Mixed count mismatch: expected 19, got ${countGoogleCharacters(mixed)}`);
+      }
+    });
+
+    test('M5.4.5', 'Validation & CJK', 'Verbal badge "✓ Không có lỗi" renders under valid drafts', (doc) => {
+      const validationSection = Array.from(doc.querySelectorAll('p')).find((p) =>
+        p.textContent.includes('Kiểm tra vị trí này')
+      );
+      if (!validationSection) throw new Error('Section "Kiểm tra vị trí này" not found');
+
+      const noErrorBadge = validationSection.querySelector('span.bg-\\[\\#e7f6ec\\], span.text-\\[\\#16a34a\\]');
+      if (!noErrorBadge || !noErrorBadge.textContent.includes('Không có lỗi')) {
+        throw new Error('Valid state badge "✓ Không có lỗi" missing or incorrect');
+      }
+    });
+
+    test('M5.4.6', 'Validation & CJK', 'Warning or error badges appear upon threshold violations', (doc) => {
+      const gsearchTab = doc.querySelector('[data-testid="platform-tab-google_search"]');
+      if (gsearchTab) {
+        gsearchTab.click();
+        const headlineInput = Array.from(doc.querySelectorAll('input[type="text"]')).find(
+          (i) => i.value.includes('Digital Marketing')
+        );
+        if (headlineInput) {
+          const orig = headlineInput.value;
+          headlineInput.value = 'A'.repeat(45);
+          headlineInput.dispatchEvent(new Event('input', { bubbles: true }));
+
+          const badge = doc.querySelector('span.bg-\\[\\#fdedef\\], span.bg-\\[\\#fbeee5\\]');
+          if (!badge) throw new Error('Warning or error badge missing on 45-character headline');
+
+          // Reset
+          headlineInput.value = orig;
+          headlineInput.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+      }
+    });
+
+    // =========================================================================
+    // Area 5: Minimal Decorative Iconography Verification
+    // =========================================================================
+    test('M5.5.1', 'Iconography R4', 'Zero decorative pulsing pencil SVGs exist in DOM', (doc) => {
+      const pencils = doc.querySelectorAll('.lucide-pencil, .pulsing-pencil, .animate-pulse svg, input + svg');
+      if (pencils.length > 0) throw new Error(`Found ${pencils.length} decorative pencil SVGs`);
+    });
+
+    test('M5.5.2', 'Iconography R4', 'Zero decorative shield SVGs exist in DOM', (doc) => {
+      const shields = doc.querySelectorAll('.lucide-shield-check, .decorative-shield, .default-notice svg');
+      if (shields.length > 0) throw new Error(`Found ${shields.length} decorative shield SVGs`);
+    });
+
+    test('M5.5.3', 'Iconography R4', 'Zero decorative sparkle or star icons exist in action buttons', (doc) => {
+      const sparkles = doc.querySelectorAll('.lucide-sparkles, .lucide-star');
+      if (sparkles.length > 0) throw new Error(`Found ${sparkles.length} decorative sparkle/star icons`);
+    });
+
+    test('M5.5.4', 'Iconography R4', 'Monochrome platform logos are exactly 18x18 currentColor SVGs', (doc) => {
+      const logos = doc.querySelectorAll('.platform-logo svg');
+      if (logos.length === 0) throw new Error('No platform logo SVGs found');
+      logos.forEach((svg) => {
+        if (svg.getAttribute('width') !== '18' || svg.getAttribute('height') !== '18') {
+          throw new Error('Platform logo SVG not 18x18');
+        }
+        if (svg.getAttribute('fill') !== 'currentColor') {
+          throw new Error('Platform logo SVG not fill="currentColor"');
+        }
+      });
+    });
+
+    // =========================================================================
+    // Runner Engine
+    // =========================================================================
+    async function runAll() {
+      const statTotal = document.getElementById('statTotal');
+      const statPassed = document.getElementById('statPassed');
+      const statFailed = document.getElementById('statFailed');
+      const statTime = document.getElementById('statTime');
+      const badgeVerdict = document.getElementById('badgeVerdict');
+      const testRows = document.getElementById('testRows');
+      const targetFrame = document.getElementById('targetFrame');
+
+      testRows.innerHTML = '';
+      statTotal.textContent = tests.length;
+      statPassed.textContent = '0';
+      statFailed.textContent = '0';
+      badgeVerdict.className = 'px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800';
+      badgeVerdict.textContent = 'Đang chạy...';
+
+      let doc = null;
+      try {
+        doc = targetFrame.contentDocument || targetFrame.contentWindow.document;
+      } catch (e) {
+        doc = document;
+      }
+
+      const tStart = performance.now();
+      let passed = 0;
+      let failed = 0;
+      const results = [];
+
+      for (const t of tests) {
+        const row = document.createElement('div');
+        row.className = 'px-4 py-2 flex items-center justify-between hover:bg-[#f6f6f7] transition-colors';
+        const start = performance.now();
+        let error = null;
+        try {
+          await t.fn(doc);
+          passed++;
+        } catch (err) {
+          failed++;
+          error = err.message || String(err);
+        }
+        const dur = Math.round(performance.now() - start);
+
+        results.push({ id: t.id, group: t.group, name: t.name, passed: !error, error, dur });
+
+        row.innerHTML = `
+          <div class="flex items-center gap-3">
+            <span class="rounded bg-slate-100 px-2 py-0.5 text-[10px] font-mono font-bold text-slate-700">${t.id}</span>
+            <span class="rounded bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold text-blue-700">${t.group}</span>
+            <span class="text-[#101113] font-sans">${t.name}</span>
+          </div>
+          <div class="flex items-center gap-2">
+            ${error ? `<span class="text-[#e8590c] font-bold">✗ Thất bại</span>` : `<span class="text-[#16a34a] font-bold">✓ Đạt</span>`}
+            <span class="text-[10px] text-[#5f6470]">(${dur}ms)</span>
+          </div>
+        `;
+        if (error) {
+          const errDiv = document.createElement('div');
+          errDiv.className = 'px-4 py-1.5 bg-[#fbeee5] text-[#e8590c] text-[11px] font-mono border-t border-[#e8590c]/20';
+          errDiv.textContent = 'Lỗi: ' + error;
+          const container = document.createElement('div');
+          container.appendChild(row);
+          container.appendChild(errDiv);
+          testRows.appendChild(container);
+        } else {
+          testRows.appendChild(row);
+        }
+
+        statPassed.textContent = passed;
+        statFailed.textContent = failed;
+      }
+
+      const totalDur = Math.round(performance.now() - tStart);
+      statTime.textContent = totalDur + ' ms';
+
+      if (failed === 0) {
+        badgeVerdict.className = 'px-3 py-1 rounded-full text-xs font-bold bg-green-100 text-green-800';
+        badgeVerdict.textContent = 'APPROVE (22/22 Đạt)';
+      } else {
+        badgeVerdict.className = 'px-3 py-1 rounded-full text-xs font-bold bg-red-100 text-red-800';
+        badgeVerdict.textContent = `REJECT (${failed} Thất bại)`;
+      }
+
+      window.__M5_TEST_RESULTS__ = { total: tests.length, passed, failed, durationMs: totalDur, details: results };
+    }
+
+    document.getElementById('btnRerun').addEventListener('click', runAll);
+
+    // Auto-run once target iframe loads
+    const frame = document.getElementById('targetFrame');
+    frame.addEventListener('load', () => {
+      setTimeout(runAll, 800);
+    });
+  </script>
+</body>
+</html>

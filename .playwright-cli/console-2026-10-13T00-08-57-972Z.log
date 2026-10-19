@@ -1,0 +1,2 @@
+[  116945ms] [ERROR] Connecting to 'blob:http://127.0.0.1:4176/81314a92-45fc-4e3b-accf-8119fcfc3bc0' violates the following Content Security Policy directive: "connect-src 'self' ws://127.0.0.1:* ws://localhost:*". The action has been blocked. @ http://127.0.0.1:4176/assets/reviewExport-Bj7cUaMC.js:1
+[  116949ms] [ERROR] Fetch API cannot load blob:http://127.0.0.1:4176/81314a92-45fc-4e3b-accf-8119fcfc3bc0. Refused to connect because it violates the document's Content Security Policy. @ http://127.0.0.1:4176/assets/reviewExport-Bj7cUaMC.js:1

@@ -1,0 +1,66 @@
+.occlusion-overlay {
+  --occlusion-red: rgba(237, 60, 71, 0.30);
+  --occlusion-red-rule: rgba(237, 60, 71, 0.95);
+  --occlusion-orange: rgba(255, 159, 28, 0.22);
+  --occlusion-orange-rule: rgba(255, 159, 28, 0.95);
+  --occlusion-label: #fff;
+  --occlusion-label-bg: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  pointer-events: none;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+.occlusion-region {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  background: var(--occlusion-red);
+  border: 1px dashed var(--occlusion-red-rule);
+}
+.occlusion-caption {
+  background: var(--occlusion-orange);
+  border-color: var(--occlusion-orange-rule);
+}
+.occlusion-region span,
+.occlusion-estimate {
+  padding: 2px 5px;
+  color: var(--occlusion-label);
+  background: var(--occlusion-label-bg);
+  font-size: 10px;
+  border-radius: 3px;
+}
+.occlusion-estimate {
+  position: absolute;
+  left: 8px;
+  top: 16%;
+}
+.preview-presentation-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-rule);
+  font-size: 12px;
+}
+.preview-presentation-controls label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.preview-presentation-controls select {
+  width: auto;
+  padding: 6px 8px;
+  font-size: 12px;
+}
+.preview-presentation-controls input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-accent);
+}
+.preview-presentation-note {
+  flex-basis: 100%;
+  color: var(--color-muted);
+  overflow-wrap: anywhere;
+}

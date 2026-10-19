@@ -1,0 +1,351 @@
+- generic [ref=e3]:
+  - link "Tới workspace" [ref=e4] [cursor=pointer]:
+    - /url: "#main"
+  - banner [ref=e5]:
+    - link "a adcraft preview lab" [ref=e6] [cursor=pointer]:
+      - /url: "#main"
+      - generic [ref=e7]: a
+      - text: adcraft
+      - generic [ref=e8]: preview lab
+    - generic [ref=e9]:
+      - text: Phiên local
+      - generic [ref=e11]: MVP
+    - generic [ref=e12]:
+      - button "Nhập nháp / ZIP" [ref=e13] [cursor=pointer]
+      - button "Xuất JSON" [ref=e16] [cursor=pointer]
+      - button "Gói review" [ref=e19] [cursor=pointer]
+  - generic [ref=e22]:
+    - navigation "Điều hướng" [ref=e23]:
+      - button "Workspace" [ref=e24] [cursor=pointer]
+      - button "So sánh" [ref=e30] [cursor=pointer]
+      - button "Catalog" [ref=e33] [cursor=pointer]
+      - generic [ref=e38]: LOCAL
+    - main [ref=e43]:
+      - generic [ref=e44]:
+        - generic [ref=e45]:
+          - generic [ref=e46]: PREVIEW LAB / WORKSPACE
+          - heading "Creative workspace." [level=1] [ref=e47]
+          - paragraph [ref=e48]: Chỉnh nội dung. Chọn vị trí. Kiểm tra trước khi chạy.
+        - generic [ref=e53]:
+          - strong [ref=e54]: Media ở trên thiết bị
+          - generic [ref=e55]: Tải lại trang sẽ mất nháp
+      - region "Chọn nền tảng" [ref=e56]:
+        - generic [ref=e57]:
+          - button "f Facebook" [ref=e58] [cursor=pointer]:
+            - generic [ref=e59]: f
+            - text: Facebook
+          - button "ig Instagram" [ref=e60] [cursor=pointer]:
+            - generic [ref=e61]: ig
+            - text: Instagram
+          - button "@ Threads" [ref=e62] [cursor=pointer]:
+            - generic [ref=e63]: "@"
+            - text: Threads
+          - button "tk TikTok" [ref=e64] [cursor=pointer]:
+            - generic [ref=e65]: tk
+            - text: TikTok
+          - button "yt YouTube" [ref=e66] [cursor=pointer]:
+            - generic [ref=e67]: yt
+            - text: YouTube
+          - button "G Google Search" [ref=e68] [cursor=pointer]:
+            - generic [ref=e69]: G
+            - text: Google Search
+          - button "Gd Google Display" [ref=e70] [cursor=pointer]:
+            - generic [ref=e71]: Gd
+            - text: Google Display
+          - button "ai ChatGPT" [ref=e72] [cursor=pointer]:
+            - generic [ref=e73]: ai
+            - text: ChatGPT
+          - button "Z Zalo Ads" [ref=e74] [cursor=pointer]:
+            - generic [ref=e75]: Z
+            - text: Zalo Ads
+          - button "Ad Admicro" [active] [pressed] [ref=e76] [cursor=pointer]:
+            - generic [ref=e77]: Ad
+            - text: Admicro
+        - generic [ref=e78]:
+          - strong [ref=e349]: CPD homepage · CafeF · Billboard Premium
+          - generic [ref=e83]: Nguồn xung đột
+          - button "Nguồn thông số" [ref=e87] [cursor=pointer]
+      - group [ref=e90]:
+        - generic "Điều kiện chiến dịch Vietnam · Chưa kết nối tài khoản" [ref=e91] [cursor=pointer]:
+          - text: Điều kiện chiến dịch
+          - generic [ref=e92]: Vietnam · Chưa kết nối tài khoản
+        - option "Chưa chọn" [selected]
+        - option "Nhận diện"
+        - option "Lưu lượng"
+        - option "Lead"
+        - option "Doanh số"
+        - option "Tương tác"
+      - region "Chọn publisher và slot Admicro" [ref=e350]:
+        - generic [ref=e351]:
+          - text: Publisher
+          - combobox "Publisher Admicro" [ref=e352]:
+            - option "CafeF" [selected]
+            - option "CafeBiz"
+            - option "VTV"
+            - option "Kenh14"
+            - option "Soha"
+            - option "aFamily"
+            - option "Phu Nu Viet Nam"
+            - option "Gia Dinh & Suc khoe doi song"
+            - option "GameK"
+            - option "GenK"
+            - option "AutoPro"
+            - option "Thanh Nien"
+            - option "Tuoi Tre"
+            - option "VnEconomy"
+        - generic [ref=e353]:
+          - text: Tìm slot / kích thước
+          - textbox "Tìm slot Admicro" [ref=e354]:
+            - /placeholder: Billboard, 300x600...
+        - generic [ref=e355]:
+          - text: Thiết bị
+          - combobox "Thiết bị Admicro" [ref=e356]:
+            - option "Tất cả" [selected]
+            - option "Desktop"
+            - option "Mobile"
+        - generic [ref=e357]:
+          - text: Loại
+          - combobox "Loại target Admicro" [ref=e358]:
+            - option "Slot và package" [selected]
+            - option "Slot"
+            - option "Package"
+        - generic [ref=e359]:
+          - text: Slot / package
+          - combobox "Slot hoặc package Admicro" [ref=e360]:
+            - option "Gói · Full Homepage Plus"
+            - option "Gói · Full Homepage Premium"
+            - option "Gói · Billboard Plus"
+            - option "Gói · Billboard Premium" [selected]
+            - option "Billboard · 1920x450 · desktop"
+            - option "CPD KingSize · 1160x250 · desktop"
+            - option "Hot banner (Big Rectangle + Mini Banner) · 300x600 · desktop"
+            - option "Center Extend · 710x250 · desktop"
+            - option "High Banner A · 300x600 · desktop"
+            - option "High Banner B · 300x600 · desktop"
+            - option "CPD TVC · ?x? · desktop"
+            - option "Billboard Mobile · 640x640 · mobile"
+            - option "Top Banner Mobile · 640x320 · mobile"
+            - option "eMagazine Mobile 1 · 640x870 · mobile"
+            - option "eMagazine Mobile 2 · 640x870 · mobile"
+            - option "Inpage Fullscreen Mobile · 375x750 · mobile"
+            - option "CPD TVC · ?x? · mobile"
+        - generic [ref=e361]: 17 kết quả · snapshot 2026-10-12 · chưa xác minh inventory hiện hành
+      - generic [ref=e93]:
+        - region "Preview quảng cáo" [ref=e94]:
+          - generic [ref=e95]:
+            - heading "02 Xem trước" [level=2] [ref=e96]:
+              - generic [ref=e97]: "02"
+              - text: Xem trước
+            - generic [ref=e98]: Live
+          - generic [ref=e100]: Desktop
+          - generic [ref=e117]:
+            - generic [ref=e122]:
+              - generic [ref=e123]:
+                - strong [ref=e124]: Admicro / CafeF · Billboard Premium
+                - generic [ref=e125]: Nguồn xung đột · admicro-cpd-2026-10-12
+              - generic [ref=e362]:
+                - generic [ref=e363]: TRANG BÁO MÔ PHỎNG · NỘI DUNG DEMO · HÌNH HỌC ƯỚC LƯỢNG
+                - generic [ref=e364]:
+                  - strong [ref=e365]: CafeF
+                  - generic [ref=e366]: Tin tức · Góc nhìn · Cuộc sống
+                - navigation "Chuyên mục demo" [ref=e367]:
+                  - generic [ref=e368]: Trang chủ
+                  - generic [ref=e369]: Kinh doanh
+                  - generic [ref=e370]: Thị trường
+                  - generic [ref=e371]: Công nghệ
+                - region "Preview slot Billboard" [ref=e372]:
+                  - generic [ref=e373]:
+                    - strong [ref=e374]: Billboard
+                    - generic [ref=e375]: 1920x350 · minh họa
+                  - generic [ref=e376]: Chưa gán asset
+                  - generic [ref=e383]: Dòng 21 · Thông số snapshot / nguồn xung đột
+                - region "Preview slot Background" [ref=e384]:
+                  - generic [ref=e385]:
+                    - strong [ref=e386]: Background
+                    - generic [ref=e387]: 1920x1200 · minh họa
+                  - generic [ref=e388]: Chưa gán asset
+                  - generic [ref=e395]: Dòng 21 · Thông số snapshot / nguồn xung đột
+                - generic [ref=e396]:
+                  - article [ref=e397]:
+                    - text: NỘI DUNG DEMO
+                    - generic [ref=e398]: Góc nhìn hôm nay
+                    - heading "Những ý tưởng mới cho một nhịp sống bền vững" [level=2] [ref=e400]
+                    - paragraph [ref=e401]: Bài viết minh họa để team xem creative trong ngữ cảnh trang báo. Nội dung và thứ tự slot không đại diện trang publisher hiện hành.
+                    - generic [ref=e402]:
+                      - paragraph [ref=e403]: Không gian làm việc thay đổi cùng thói quen mới
+                      - paragraph [ref=e404]: Câu chuyện thương hiệu từ những điều gần gũi
+                  - complementary [ref=e405]:
+                    - region "Preview slot High Banner A" [ref=e406]:
+                      - generic [ref=e407]:
+                        - strong [ref=e408]: High Banner A
+                        - generic [ref=e409]: 300x600 · minh họa
+                      - generic [ref=e410]: Chưa gán asset
+                      - generic [ref=e417]: Dòng 21 · Thông số snapshot / nguồn xung đột
+                - generic [ref=e418]: 3 slot · admicro-cpd-2026-10-12 · không xác nhận inventory, giá hoặc spec hiện hành
+              - generic [ref=e164]:
+                - strong [ref=e165]: 3 lỗi · 0 lưu ý · 2 chưa rõ
+                - generic [ref=e166]: Mô phỏng; không phải phê duyệt quảng cáo.
+            - generic [ref=e167]: Admicro / CafeF · Billboard Premium
+          - generic [ref=e168]: Mô phỏng cơ bản. Không đảm bảo quảng cáo được duyệt.
+          - generic [ref=e172]:
+            - button "Xuất PNG" [ref=e173] [cursor=pointer]
+            - button "Gói review ZIP" [ref=e179] [cursor=pointer]
+            - generic [ref=e182]: ZIP gồm media, PNG và kết quả kiểm tra. Video xuất một khung hình.
+        - complementary "Kiểm tra creative" [ref=e183]:
+          - generic [ref=e184]:
+            - heading "03 Preflight" [level=2] [ref=e185]:
+              - generic [ref=e186]: "03"
+              - text: Preflight
+            - generic [ref=e187]: "5"
+          - generic [ref=e188]:
+            - generic [ref=e194]:
+              - strong [ref=e195]: Có nội dung cần sửa
+              - generic [ref=e196]: Kết quả theo rule, không phải phê duyệt.
+            - generic [ref=e197]:
+              - generic [ref=e198]: 3 lỗi
+              - generic [ref=e200]: 0 lưu ý
+              - generic [ref=e202]: 2 chưa rõ
+          - generic [ref=e204]:
+            - generic [ref=e421]:
+              - 'button "Cần sửa Billboard: giữ placeholder, cần gán asset riêng. Hiện tại: Chưa gán asset · Yêu cầu: 1920x350 Nguồn: Admicro CPD source chain · Nguồn xung đột · admicro-cpd-2026-10-12" [ref=e422] [cursor=pointer]':
+                - generic [ref=e426]:
+                  - text: Cần sửa
+                  - paragraph [ref=e427]: "Billboard: giữ placeholder, cần gán asset riêng."
+                  - generic [ref=e428]: "Hiện tại: Chưa gán asset · Yêu cầu: 1920x350"
+                  - generic [ref=e429]: "Nguồn: Admicro CPD source chain · Nguồn xung đột · admicro-cpd-2026-10-12"
+              - button "Nguồn rule admicro.slot.admicro.slot.admicro.entry.admicro-cpd-2026-10-12.cafef.billboard-premium.billboard-1920x350-background-1920-x-1200-high-banner-a-300x600.desktop.a8bpxh.1.billboard.1:publisher.bindings.admicro.slot.admicro.entry.admicro-cpd-2026-10-12.cafef.billboard-premium.billboard-1920x350-background-1920-x-1200-high-banner-a-300x600.desktop.a8bpxh.1.billboard.1" [ref=e430] [cursor=pointer]: Nguồn rule
+            - generic [ref=e434]:
+              - 'button "Cần sửa Background: giữ placeholder, cần gán asset riêng. Hiện tại: Chưa gán asset · Yêu cầu: 1920x1200 Nguồn: Admicro CPD source chain · Nguồn xung đột · admicro-cpd-2026-10-12" [ref=e435] [cursor=pointer]':
+                - generic [ref=e439]:
+                  - text: Cần sửa
+                  - paragraph [ref=e440]: "Background: giữ placeholder, cần gán asset riêng."
+                  - generic [ref=e441]: "Hiện tại: Chưa gán asset · Yêu cầu: 1920x1200"
+                  - generic [ref=e442]: "Nguồn: Admicro CPD source chain · Nguồn xung đột · admicro-cpd-2026-10-12"
+              - button "Nguồn rule admicro.slot.admicro.slot.admicro.entry.admicro-cpd-2026-10-12.cafef.billboard-premium.billboard-1920x350-background-1920-x-1200-high-banner-a-300x600.desktop.a8bpxh.1.background.2:publisher.bindings.admicro.slot.admicro.entry.admicro-cpd-2026-10-12.cafef.billboard-premium.billboard-1920x350-background-1920-x-1200-high-banner-a-300x600.desktop.a8bpxh.1.background.2" [ref=e443] [cursor=pointer]: Nguồn rule
+            - generic [ref=e447]:
+              - 'button "Cần sửa High Banner A: giữ placeholder, cần gán asset riêng. Hiện tại: Chưa gán asset · Yêu cầu: 300x600 Nguồn: Admicro CPD source chain · Nguồn xung đột · admicro-cpd-2026-10-12" [ref=e448] [cursor=pointer]':
+                - generic [ref=e452]:
+                  - text: Cần sửa
+                  - paragraph [ref=e453]: "High Banner A: giữ placeholder, cần gán asset riêng."
+                  - generic [ref=e454]: "Hiện tại: Chưa gán asset · Yêu cầu: 300x600"
+                  - generic [ref=e455]: "Nguồn: Admicro CPD source chain · Nguồn xung đột · admicro-cpd-2026-10-12"
+              - button "Nguồn rule admicro.slot.admicro.slot.admicro.entry.admicro-cpd-2026-10-12.cafef.billboard-premium.billboard-1920x350-background-1920-x-1200-high-banner-a-300x600.desktop.a8bpxh.1.high-banner-a.3:publisher.bindings.admicro.slot.admicro.entry.admicro-cpd-2026-10-12.cafef.billboard-premium.billboard-1920x350-background-1920-x-1200-high-banner-a-300x600.desktop.a8bpxh.1.high-banner-a.3" [ref=e456] [cursor=pointer]: Nguồn rule
+            - generic [ref=e460]:
+              - 'button "Chưa xác minh Ngày nguồn Admicro xung đột. Chưa xác minh giá, inventory hoặc vị trí hiện hành. Hiện tại: 2026-05-28 / 2025-02-05 / 2022-04 · Yêu cầu: Đối chiếu với publisher trước khi sử dụng. Nguồn: Admicro CPD source chain · Nguồn xung đột · admicro-cpd-2026-10-12" [ref=e461] [cursor=pointer]':
+                - generic [ref=e466]:
+                  - text: Chưa xác minh
+                  - paragraph [ref=e467]: Ngày nguồn Admicro xung đột. Chưa xác minh giá, inventory hoặc vị trí hiện hành.
+                  - generic [ref=e468]: "Hiện tại: 2026-05-28 / 2025-02-05 / 2022-04 · Yêu cầu: Đối chiếu với publisher trước khi sử dụng."
+                  - generic [ref=e469]: "Nguồn: Admicro CPD source chain · Nguồn xung đột · admicro-cpd-2026-10-12"
+              - button "Nguồn rule admicro.source_dates:publisher.source" [ref=e470] [cursor=pointer]: Nguồn rule
+            - generic [ref=e247]:
+              - 'button "Chưa xác minh Mục tiêu, thị trường và điều kiện tài khoản chưa được xác minh cho target này. Hiện tại: Vietnam / unknown / unknown / not_connected · Yêu cầu: Đối chiếu điều kiện phân phối trong tài khoản nền tảng. Nguồn: Admicro CPD source chain · Chờ xác minh · admicro-cpd-2026-10-12" [ref=e474] [cursor=pointer]':
+                - generic [ref=e253]:
+                  - text: Chưa xác minh
+                  - paragraph [ref=e254]: Mục tiêu, thị trường và điều kiện tài khoản chưa được xác minh cho target này.
+                  - generic [ref=e255]: "Hiện tại: Vietnam / unknown / unknown / not_connected · Yêu cầu: Đối chiếu điều kiện phân phối trong tài khoản nền tảng."
+                  - generic [ref=e256]: "Nguồn: Admicro CPD source chain · Chờ xác minh · admicro-cpd-2026-10-12"
+              - button "Nguồn rule context.compatibility:context" [ref=e257] [cursor=pointer]: Nguồn rule
+          - button "Xem 0 kiểm tra đạt" [ref=e475] [cursor=pointer]
+          - paragraph [ref=e270]: Unknown không được tính là pass. Mỗi rule giữ nguồn và spec version.
+        - group [ref=e271]:
+          - generic [ref=e272]:
+            - generic [ref=e273]:
+              - heading "01 Nội dung creative" [level=2] [ref=e274]:
+                - generic [ref=e275]: "01"
+                - text: Nội dung creative
+              - generic [ref=e276]:
+                - button "Hoàn tác" [ref=e277] [cursor=pointer]
+                - button "Làm lại" [disabled] [ref=e281]
+            - region "Gán asset từng slot" [ref=e476]:
+              - generic [ref=e477]:
+                - heading "Asset theo slot 3 slot" [level=3] [ref=e478]:
+                  - text: Asset theo slot
+                  - generic [ref=e479]: 3 slot
+                - button "Thêm media local" [ref=e480] [cursor=pointer]
+              - paragraph [ref=e484]: Mỗi slot giữ asset, crop và focal point riêng. Trang báo và vị trí là mô phỏng.
+              - generic [ref=e485]:
+                - heading "Billboard" [level=4] [ref=e486]
+                - generic [ref=e487]: 1920 × 350 · desktop · nguồn xung đột
+                - generic [ref=e488]: Asset cho Billboard
+                - combobox "Asset cho Billboard" [ref=e489]:
+                  - option "Chưa gán asset" [selected]
+                - generic [ref=e490]:
+                  - text: Crop
+                  - combobox "Crop admicro.slot.admicro.entry.admicro-cpd-2026-10-12.cafef.billboard-premium.billboard-1920x350-background-1920-x-1200-high-banner-a-300x600.desktop.a8bpxh.1.billboard.1" [ref=e491]:
+                    - option "Giữ toàn bộ media" [selected]
+                    - option "Lấp đầy khung"
+                - generic [ref=e492]:
+                  - text: Focal ngang · 50%
+                  - slider "Focal x admicro.slot.admicro.entry.admicro-cpd-2026-10-12.cafef.billboard-premium.billboard-1920x350-background-1920-x-1200-high-banner-a-300x600.desktop.a8bpxh.1.billboard.1" [disabled] [ref=e493]: "50"
+                - generic [ref=e494]:
+                  - text: Focal dọc · 50%
+                  - slider "Focal y admicro.slot.admicro.entry.admicro-cpd-2026-10-12.cafef.billboard-premium.billboard-1920x350-background-1920-x-1200-high-banner-a-300x600.desktop.a8bpxh.1.billboard.1" [disabled] [ref=e495]: "50"
+                - button "Nguồn slot" [ref=e496] [cursor=pointer]
+                - group [ref=e500]:
+                  - generic "Dòng nguồn 21" [ref=e501] [cursor=pointer]
+              - generic [ref=e502]:
+                - heading "Background" [level=4] [ref=e503]
+                - generic [ref=e504]: 1920 × 1200 · desktop · nguồn xung đột
+                - generic [ref=e505]: Asset cho Background
+                - combobox "Asset cho Background" [ref=e506]:
+                  - option "Chưa gán asset" [selected]
+                - generic [ref=e507]:
+                  - text: Crop
+                  - combobox "Crop admicro.slot.admicro.entry.admicro-cpd-2026-10-12.cafef.billboard-premium.billboard-1920x350-background-1920-x-1200-high-banner-a-300x600.desktop.a8bpxh.1.background.2" [ref=e508]:
+                    - option "Giữ toàn bộ media" [selected]
+                    - option "Lấp đầy khung"
+                - generic [ref=e509]:
+                  - text: Focal ngang · 50%
+                  - slider "Focal x admicro.slot.admicro.entry.admicro-cpd-2026-10-12.cafef.billboard-premium.billboard-1920x350-background-1920-x-1200-high-banner-a-300x600.desktop.a8bpxh.1.background.2" [disabled] [ref=e510]: "50"
+                - generic [ref=e511]:
+                  - text: Focal dọc · 50%
+                  - slider "Focal y admicro.slot.admicro.entry.admicro-cpd-2026-10-12.cafef.billboard-premium.billboard-1920x350-background-1920-x-1200-high-banner-a-300x600.desktop.a8bpxh.1.background.2" [disabled] [ref=e512]: "50"
+                - button "Nguồn slot" [ref=e513] [cursor=pointer]
+                - group [ref=e517]:
+                  - generic "Dòng nguồn 21" [ref=e518] [cursor=pointer]
+              - generic [ref=e519]:
+                - heading "High Banner A" [level=4] [ref=e520]
+                - generic [ref=e521]: 300 × 600 · desktop · nguồn xung đột
+                - generic [ref=e522]: Asset cho High Banner A
+                - combobox "Asset cho High Banner A" [ref=e523]:
+                  - option "Chưa gán asset" [selected]
+                - generic [ref=e524]:
+                  - text: Crop
+                  - combobox "Crop admicro.slot.admicro.entry.admicro-cpd-2026-10-12.cafef.billboard-premium.billboard-1920x350-background-1920-x-1200-high-banner-a-300x600.desktop.a8bpxh.1.high-banner-a.3" [ref=e525]:
+                    - option "Giữ toàn bộ media" [selected]
+                    - option "Lấp đầy khung"
+                - generic [ref=e526]:
+                  - text: Focal ngang · 50%
+                  - slider "Focal x admicro.slot.admicro.entry.admicro-cpd-2026-10-12.cafef.billboard-premium.billboard-1920x350-background-1920-x-1200-high-banner-a-300x600.desktop.a8bpxh.1.high-banner-a.3" [disabled] [ref=e527]: "50"
+                - generic [ref=e528]:
+                  - text: Focal dọc · 50%
+                  - slider "Focal y admicro.slot.admicro.entry.admicro-cpd-2026-10-12.cafef.billboard-premium.billboard-1920x350-background-1920-x-1200-high-banner-a-300x600.desktop.a8bpxh.1.high-banner-a.3" [disabled] [ref=e529]: "50"
+                - button "Nguồn slot" [ref=e530] [cursor=pointer]
+                - group [ref=e534]:
+                  - generic "Dòng nguồn 21" [ref=e535] [cursor=pointer]
+            - generic [ref=e285]:
+              - button "Nội dung" [ref=e286] [cursor=pointer]
+              - button "Media" [ref=e290] [cursor=pointer]
+              - button "Copy riêng" [ref=e295] [cursor=pointer]
+            - generic [ref=e297]:
+              - generic [ref=e298]:
+                - generic [ref=e299]: Bố cục nội dung
+                - combobox "Bố cục nội dung" [ref=e300]:
+                  - option "Ảnh đơn" [selected]
+                  - option "Nhiều ảnh · cần kiểm tra"
+                  - option "Video · cần kiểm tra"
+                  - option "Carousel · cần kiểm tra"
+                  - option "Text / RSA · cần kiểm tra"
+                  - option "Asset set · cần kiểm tra"
+                - generic [ref=e301]: Đổi vị trí giữ nguyên nội dung và asset.
+              - generic [ref=e302]:
+                - generic [ref=e303]:
+                  - generic [ref=e304]: Tên creative
+                  - generic [ref=e305]: "17"
+                - textbox "Tên creative" [ref=e306]: Creative đầu tiên
+              - generic [ref=e536]: Banner dùng file media tải lên. Chọn tab Media để thêm hoặc đổi asset; nội dung chữ nằm trong ảnh.
+              - generic [ref=e341]: Bộ đếm hiển thị dùng grapheme. Rule engine áp cách đếm riêng từng profile.
+      - generic [ref=e345]:
+        - generic [ref=e346]: Session-only · Không OAuth · Không ad API
+        - generic [ref=e348]: Editor · Compare · Preflight · Review export
