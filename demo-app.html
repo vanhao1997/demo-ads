@@ -6680,7 +6680,7 @@
       const desc = truncateText(state.primaryText || state.description, 90);
       const id = placement.id;
 
-      if (id === "gdn_320_50") {
+      if (id === "gdn_320x50" || id === "gdn_320_50") {
         return (
           <div className="relative mx-auto flex h-[50px] w-[320px] items-center gap-2.5 overflow-hidden rounded border border-[#dadce0] bg-white px-2.5 shadow-xs">
             <BrandAvatar state={state} size={30} />
@@ -6698,7 +6698,7 @@
         );
       }
 
-      if (id === "gdn_320_100") {
+      if (id === "gdn_320x100" || id === "gdn_320_100") {
         return (
           <div className="relative mx-auto flex h-[100px] w-[320px] overflow-hidden rounded border border-[#dadce0] bg-white shadow-xs">
             <div className="relative h-full w-[130px] shrink-0">
@@ -6721,8 +6721,8 @@
         );
       }
 
-      if (id === "gdn_728_90" || id === "gdn_970_250") {
-        const isMasthead = id === "gdn_970_250";
+      if (id === "gdn_728x90" || id === "gdn_728_90" || id === "gdn_970x250" || id === "gdn_970_250") {
+        const isMasthead = id === "gdn_970x250" || id === "gdn_970_250";
         return (
           <div
             className="relative mx-auto flex w-full items-center overflow-hidden rounded-lg border border-[#dadce0] bg-white shadow-xs"
@@ -6751,8 +6751,8 @@
         );
       }
 
-      if (id === "gdn_300_600" || id === "gdn_160_600") {
-        const isNarrow = id === "gdn_160_600";
+      if (id === "gdn_300x600" || id === "gdn_300_600" || id === "gdn_160x600" || id === "gdn_160_600") {
+        const isNarrow = id === "gdn_160x600" || id === "gdn_160_600";
         return (
           <div
             className="relative mx-auto flex flex-col overflow-hidden rounded-lg border border-[#dadce0] bg-white shadow-xs"
@@ -6823,7 +6823,7 @@
       }
 
       // Default 300x250 / 336x280
-      const isLargeRect = id === "gdn_336_280";
+      const isLargeRect = id === "gdn_336x280" || id === "gdn_336_280";
       return (
         <div
           className="relative mx-auto overflow-hidden rounded-lg border border-[#dadce0] bg-white shadow-xs"
@@ -6857,8 +6857,8 @@
       const sponsoredText = translateSponsored("gdn", lang);
       const ctaText = translateCta(state.cta, lang);
       const domain = parseDomain(state.url);
-      const isTopBanner = placement.id === "gdn_728_90" || placement.id === "gdn_970_250";
-      const isStickyBottom = placement.id === "gdn_320_50";
+      const isTopBanner = placement.id === "gdn_728x90" || placement.id === "gdn_728_90" || placement.id === "gdn_970x250" || placement.id === "gdn_970_250";
+      const isStickyBottom = placement.id === "gdn_320x50" || placement.id === "gdn_320_50";
 
       // 1. Google Discover Feed (Demand Gen & Performance Max)
       if (placement.id === "gdn_discover") {
@@ -12067,8 +12067,11 @@
       }, [platformPlacements, placementFilter]);
 
       const currentPlacement = useMemo(
-        () => platformPlacements.find((p) => p.id === activePlacementId || p.canonicalId === activePlacementId) || platformPlacements[0],
-        [platformPlacements, activePlacementId]
+        () =>
+          filteredPlacements.find((p) => p.id === activePlacementId || p.canonicalId === activePlacementId) ||
+          filteredPlacements[0] ||
+          platformPlacements[0],
+        [filteredPlacements, platformPlacements, activePlacementId]
       );
 
       const currentPlatformObj = useMemo(
@@ -12187,7 +12190,7 @@
           : "w-full rounded-xl border border-[#E5E7EB] bg-[#FAFAFA] px-3 h-9 text-xs text-[#27272E] focus:border-[#18181B] focus:bg-white focus:text-[#18181B] focus:ring-1 focus:ring-[#18181B]/10 focus:outline-none transition-colors";
 
       const hasSafeZoneControls = showAll
-        ? platformPlacements.some((p) => p.safeZone)
+        ? filteredPlacements.some((p) => p.safeZone)
         : Boolean(currentPlacement.safeZone);
 
       const validation = useMemo(() => evaluateValidation(currentPlacement, state), [currentPlacement, state]);
@@ -13737,7 +13740,23 @@
                                 <button
                                   key={f.id}
                                   type="button"
-                                  onClick={() => setPlacementFilter(f.id)}
+                                  onClick={() => {
+                                    setPlacementFilter(f.id);
+                                    const nextList =
+                                      f.id === "mobile"
+                                        ? platformPlacements.filter((p) => p.device === "mobile")
+                                        : f.id === "desktop"
+                                        ? platformPlacements.filter((p) => p.device === "desktop")
+                                        : f.id === "vertical"
+                                        ? platformPlacements.filter((p) => p.ratio === "9:16" || p.safeZone)
+                                        : platformPlacements;
+                                    if (
+                                      nextList.length > 0 &&
+                                      !nextList.some((p) => p.id === activePlacementId || p.canonicalId === activePlacementId)
+                                    ) {
+                                      setActivePlacementId(nextList[0].id);
+                                    }
+                                  }}
                                   className={`rounded-md px-2 py-0.5 text-[10.5px] font-semibold transition-colors ${
                                     actF
                                       ? "bg-[#18181B] text-white"
@@ -13800,7 +13819,7 @@
                               : "border-dashed border-[#CBD5E1] bg-white text-[#525260] hover:border-[#18181B] hover:text-[#18181B]"
                           }`}
                         >
-                          <span>Tất cả vị trí ({platformPlacements.length})</span>
+                          <span>Tất cả vị trí ({filteredPlacements.length})</span>
                         </button>
                       </div>
 
@@ -14173,7 +14192,7 @@
                             </div>
                           )}
                           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                            {platformPlacements.map((pl) => {
+                            {filteredPlacements.map((pl) => {
                               const plVal = evaluateValidation(pl, state);
                               return (
                                 <div
